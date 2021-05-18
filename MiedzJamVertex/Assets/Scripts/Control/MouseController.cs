@@ -1,14 +1,15 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using RoboMed.Interactibles;
+using RoboMed.Control.InteractionHandlers;
 
 namespace RoboMed.Control
 {
     public class MouseController : MonoBehaviour
     {
         public GameObject CurrentInteractible { get; private set; } = null;
+
+        private IInteractionHandler[] handlers;
 
 
         /// <summary>
@@ -23,7 +24,7 @@ namespace RoboMed.Control
             foreach(var hit in raycast)
             {
                 Collider collider = hit.collider;
-                if(collider.TryGetComponent(out IInteractible interactible) && interactible.CanInteract)
+                if(collider.TryGetComponent(out IInteractible interactible) && interactible.CanInteract && CanInteractWith(collider.gameObject))
                 {
                     return collider.gameObject;
                 }
@@ -32,44 +33,104 @@ namespace RoboMed.Control
             return null;
         }
 
+        private void Awake()
+        {
+            handlers = GetComponents<IInteractionHandler>();
+        }
+
         // Update is called once per frame
         void Update()
         {
             UpdateInteractible();
+            if (CurrentInteractible == null)
+                return;
 
             if (Input.GetMouseButtonDown(0))
             {
-                if (CurrentInteractible == null)
-                    return;
+                InteractOneTime();
+            }
 
+            if (Input.GetMouseButton(0))
+            {  // Przycisk trzymany
+                InteractContinuous();
+            }
+        }
+
+        private void InteractOneTime()
+        {
+            bool handled = false;
+
+            foreach (var handler in handlers)
+            {
+                handler.InteractWith(CurrentInteractible);
+                handled = true;
+            }
+
+            if (handled)
+            {
                 CurrentInteractible.GetComponent<IInteractible>().Interact();
+            }
+        }
 
-                foreach (var handler in GetComponents<IInteractionHandler>())
+        private void InteractContinuous()
+        {
+            bool handled = false;
+
+            foreach (var handler in handlers)
+            {
+                if (handler.InteractionFrequency == InteractionFrequency.Continuous)
                 {
-                    handler.Interact(CurrentInteractible);
+                    handler.InteractWith(CurrentInteractible);
+                    handled = true;
                 }
+            }
+
+
+            if (handled)
+            {
+                CurrentInteractible.GetComponent<IInteractible>().Interact();
             }
         }
 
         private void UpdateInteractible()
         {
-            GameObject pointedObject = GetPointedInteractible();
-            // Only interactible objects
-            bool interactiblePresent = pointedObject != null && pointedObject.TryGetComponent(out IInteractible interactible) && interactible.CanInteract;
-            GameObject pointedInteractible = interactiblePresent ? pointedObject : null;
+            GameObject pointedInteractible = GetPointedInteractible();
 
             if (CurrentInteractible != pointedInteractible)
             {
                 // Inform the previous object
-                if (CurrentInteractible != null)
+                if (CurrentInteractible != null) 
                     CurrentInteractible.GetComponent<IInteractible>().QuitAvailability();
 
                 // Inform the current object
                 if(pointedInteractible != null)
                     pointedInteractible.GetComponent<IInteractible>().EnterAvailability();
+
+                // Inform all the interaction handlers
+                foreach (var handler in handlers)
+                {
+                    handler.OnAvailableInteractibleChanged(pointedInteractible);
+                }
             }
 
             CurrentInteractible = pointedInteractible;
+        }
+
+        private bool CanInteractWith(GameObject interactible)
+        {
+            if(TryGetComponent(out ItemHolder itemHolder) && itemHolder.HeldObject != null)
+            {
+                // Jeœli trzymamy coœ w rêku, interakcje pochodz¹ tylko z trzymanego przedmiotu
+                return itemHolder.CanInteractWith(interactible);
+            }
+
+            foreach(var handler in handlers)
+            {
+                if (handler.CanInteractWith(interactible))
+                    return true;
+            }
+
+            return false;
         }
 
         /// <summary>

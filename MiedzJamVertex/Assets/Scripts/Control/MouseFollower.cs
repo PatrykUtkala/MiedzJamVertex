@@ -8,10 +8,14 @@ namespace RoboMed.Control
     [RequireComponent(typeof(MouseController))]
     public class MouseFollower : MonoBehaviour
     {
+        static float maxDistance = 100f;
+
         [SerializeField] Transform controlledObject;
         [SerializeField] float distanceFromCamera = 5f;
         [SerializeField] float distanceFromPointed = 2f;
         [SerializeField] float movementSpeed = 5f;
+
+        public float DistanceFromPointed { get; set; }
 
         private Vector3 targetPosition;
 
@@ -20,6 +24,7 @@ namespace RoboMed.Control
         private void Awake()
         {
             targetPosition = transform.position;
+            DistanceFromPointed = distanceFromPointed;
 
             mouseController = GetComponent<MouseController>();
         }
@@ -44,8 +49,11 @@ namespace RoboMed.Control
             if (!pointsInteractible)
                 return mouseRay.GetPoint(distanceFromCamera);  // Latanie ze sta³¹ odleg³oœci¹ od kamery
 
-            float distanceToObject = Vector3.Distance(pointedObject.transform.position, Camera.main.transform.position);
-            return mouseRay.GetPoint(distanceToObject - distanceFromPointed);
+            // Uzyskanie wskazywanego punktu
+            pointedObject.GetComponent<Collider>().Raycast(mouseRay, out RaycastHit hit, maxDistance);
+
+            float distanceToObject = Vector3.Distance(hit.point, Camera.main.transform.position);
+            return mouseRay.GetPoint(distanceToObject - DistanceFromPointed);
         }
     }
 }

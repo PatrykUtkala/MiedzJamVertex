@@ -1,7 +1,9 @@
-﻿namespace RoboMed.Interactibles
+﻿using RoboMed.Control;
+
+namespace RoboMed.Interactibles
 {
     // An object that can be held
-    interface IHeldObject
+    interface IHoldable
     {
         /// <summary>
         /// Called when the object started being held
@@ -12,5 +14,7 @@
         /// Called after being released
         /// </summary>
         void OnReleased();
+
+        MouseFollower Hand { get; set; }
     }
 }

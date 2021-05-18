@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using RoboMed.Control;
+using UnityEngine;
 
 namespace RoboMed.Interactibles
 {
-    public class Holdable : MonoBehaviour, IHeldObject
+    public class Holdable : MonoBehaviour, IHoldable
     {
         public void OnHeld()
         {
@@ -13,5 +14,7 @@ namespace RoboMed.Interactibles
         {
             GetComponent<IInteractible>().CanInteract = true;
         }
+
+        public MouseFollower Hand { get; set; }
     }
 }
