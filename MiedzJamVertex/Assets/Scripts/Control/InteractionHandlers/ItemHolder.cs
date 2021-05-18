@@ -10,22 +10,6 @@ namespace RoboMed.Control.InteractionHandlers
 
         public GameObject HeldObject { get; private set; } = null;
 
-        public InteractionFrequency InteractionFrequency
-        {
-            get
-            {
-                if(HeldObject != null)
-                {
-                    if (HeldObject.TryGetComponent(out IInteractionHandler handler))
-                        return handler.InteractionFrequency;
-
-                    return InteractionFrequency.OneTime;
-                }
-
-                return InteractionFrequency.OneTime;
-            }
-        }
-
         // Informacje o trzymanym obiekcie
         private Transform startingParent;
         private Vector3 startingPosition;
@@ -54,6 +38,17 @@ namespace RoboMed.Control.InteractionHandlers
                 {
                     handler.InteractWith(interactible);
                 }
+            }
+        }
+
+        public void ContinueInteraction(GameObject interactible)
+        {
+            if (interactible == HeldObject)
+                return;
+
+            if(HeldObject != null && HeldObject.TryGetComponent(out IInteractionHandler handler) && handler.CanInteractWith(interactible))
+            {
+                handler.ContinueInteraction(interactible);
             }
         }
 
@@ -110,5 +105,6 @@ namespace RoboMed.Control.InteractionHandlers
                 handler.OnAvailableInteractibleChanged(newInteractible);
             }
         }
+
     }
 }

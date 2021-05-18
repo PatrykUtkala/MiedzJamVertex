@@ -10,8 +10,12 @@ namespace RoboMed.Control.InteractionHandlers
 {
     public class PathMarker : MonoBehaviour, IInteractionHandler, IHoldable
     {
-        [SerializeField] float maxDistance = 50f;
+        static float maxDistance = 50f; // maksymalna odległość od kamery
+
+        [SerializeField] float resolution = 1f;
         [SerializeField] Transform wandEnd;
+
+        public event Action<Stack<Vector3>> onFinishLine;
 
         private GameObject pointedObject;
         private Quaternion startingRotation; // obrót sprzed wskazywania
@@ -19,7 +23,9 @@ namespace RoboMed.Control.InteractionHandlers
 
         private float length; // odległość do czubka markera
 
-        public InteractionFrequency InteractionFrequency => InteractionFrequency.Continuous;
+        private bool isDrawing = false;
+        private bool drewThisFrame = false;
+        private Stack<Vector3> currPoints = new Stack<Vector3>();
 
         public MouseFollower Hand { get; set; }
 
@@ -27,7 +33,18 @@ namespace RoboMed.Control.InteractionHandlers
 
         public void InteractWith(GameObject interactible)
         {
-            // Malowanie ścieżki
+            StartNewLine();
+            drewThisFrame = true;
+            isDrawing = true;
+        }
+
+        public void ContinueInteraction(GameObject interactible)
+        {
+            if (isDrawing)
+            {
+                ContinueLine();
+                drewThisFrame = true;
+            }
         }
 
         public void OnAvailableInteractibleChanged(GameObject newInteractible)
@@ -63,28 +80,38 @@ namespace RoboMed.Control.InteractionHandlers
         {
             if (pointedObject != null)
             {
-                PointAt(pointedObject);
+                PointAt(GetPointedPoint());
             }
         }
 
-        private void PointAt(GameObject target)
+        private void LateUpdate()
         {
-            Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            bool raycastSuccess = target.GetComponent<Collider>().Raycast(mouseRay, out RaycastHit hit, maxDistance);
-            if (!raycastSuccess)
+            if (isDrawing && !drewThisFrame)
             {
-                transform.rotation = startingRotation;
-                return;
+                if(currPoints.Count > 0)
+                {
+                    Debug.Log("The end. Podziwiajcie");
+                    onFinishLine?.Invoke(currPoints);
+                }
+
+                isDrawing = false;
             }
 
-            transform.LookAt(hit.point);
+            drewThisFrame = false;
+        }
+
+        private void PointAt(Vector3 point)
+        {
+            transform.LookAt(point);
             transform.Rotate(90f, 0, 0);
         }
 
-        private void GetPointedPoint(GameObject target)
+        private Vector3 GetPointedPoint()
         {
+            Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 
+            bool raycastSuccess = pointedObject.GetComponent<Collider>().Raycast(mouseRay, out RaycastHit hit, maxDistance);
+            return hit.point;
         }
 
         public void OnHeld()
@@ -99,18 +126,52 @@ namespace RoboMed.Control.InteractionHandlers
             OnAvailableInteractibleChanged(null);
         }
 
+
+        /***************** Tworzenie ścieżki *******************/
+        private void StartNewLine()
+        {
+            // Reset
+            currPoints = new Stack<Vector3>();
+            // Dodanie pierwszego punktu
+            currPoints.Push(GetPointedPoint());
+        }
+        private void ContinueLine()
+        {
+            Vector3 pointedPoint = GetPointedPoint();
+
+            if (Vector3.Distance(pointedPoint, currPoints.Peek()) >= resolution)
+            {
+                // Punkt kontrolny (odległy od poprzedniego o rozdzielczość)
+                currPoints.Push(pointedPoint);
+            }
+        }
+
         private void OnDrawGizmos()
         {
-            if(pointedObject != null)
+            if (currPoints == null)
+                return;
+
+            GizmosDrawLine(currPoints);
+        }
+
+        private void GizmosDrawLine(Stack<Vector3> line)
+        {
+            Gizmos.color = Color.yellow;
+
+            int i = 0;
+            Vector3 prev = Vector3.zero;
+
+            foreach (Vector3 point in line)
             {
-                Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+                Gizmos.DrawSphere(point, 0.1f);
 
-                bool raycastSuccess = pointedObject.GetComponent<Collider>().Raycast(mouseRay, out RaycastHit hit, maxDistance);
-                if (!raycastSuccess)
-                    return;
+                if (i >= 1)
+                {
+                    Gizmos.DrawLine(prev, point);
+                }
 
-                Gizmos.color = new Color(255, 128, 0);
-                Gizmos.DrawSphere(hit.point, 0.1f);
+                prev = point;
+                i++;
             }
         }
     }

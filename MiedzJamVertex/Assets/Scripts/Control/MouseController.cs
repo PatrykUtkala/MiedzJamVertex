@@ -49,7 +49,6 @@ namespace RoboMed.Control
             {
                 InteractOneTime();
             }
-
             if (Input.GetMouseButton(0))
             {  // Przycisk trzymany
                 InteractContinuous();
@@ -78,13 +77,9 @@ namespace RoboMed.Control
 
             foreach (var handler in handlers)
             {
-                if (handler.InteractionFrequency == InteractionFrequency.Continuous)
-                {
-                    handler.InteractWith(CurrentInteractible);
-                    handled = true;
-                }
+                handler.ContinueInteraction(CurrentInteractible);
+                handled = true;
             }
-
 
             if (handled)
             {

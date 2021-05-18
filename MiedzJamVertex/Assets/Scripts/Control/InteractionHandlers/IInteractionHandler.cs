@@ -2,17 +2,18 @@
 
 namespace RoboMed.Control.InteractionHandlers
 {
-    public enum InteractionFrequency { OneTime, Continuous };
 
     interface IInteractionHandler
     {
-        /// <summary>
-        /// Stwierdza, czy interakcja następuje tylko po kliknięciu, czy też przy trzymaniu wciśniętego przycisku.
-        /// </summary>
-        InteractionFrequency InteractionFrequency { get; }
-
         bool CanInteractWith(GameObject interactible);
+        /// <summary>
+        /// Wywoływane po naciśnięciu przycisku
+        /// </summary>
         void InteractWith(GameObject interactible);
+        /// <summary>
+        /// Wywoływane, gdy przycisk jest wciśnięty
+        /// </summary>
+        void ContinueInteraction(GameObject interactible);
 
         void OnAvailableInteractibleChanged(GameObject newInteractible);
     }
