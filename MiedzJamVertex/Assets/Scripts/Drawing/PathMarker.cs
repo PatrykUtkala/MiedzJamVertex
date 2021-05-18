@@ -1,12 +1,14 @@
-﻿using RoboMed.Interactibles;
+﻿using RoboMed.Control.InteractionHandlers;
+using RoboMed.Interactibles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using RoboMed.Control;
 
-namespace RoboMed.Control.InteractionHandlers
+namespace RoboMed.Drawing
 {
     public class PathMarker : MonoBehaviour, IInteractionHandler, IHoldable
     {
@@ -90,7 +92,7 @@ namespace RoboMed.Control.InteractionHandlers
             {
                 if(currPoints.Count > 0)
                 {
-                    Debug.Log("The end. Podziwiajcie");
+                    CopperLine.Main.Add(currPoints);
                     onFinishLine?.Invoke(currPoints);
                 }
 
