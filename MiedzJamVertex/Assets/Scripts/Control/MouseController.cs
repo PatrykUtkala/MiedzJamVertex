@@ -2,12 +2,35 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using RoboMed.Interactibles;
 
 namespace RoboMed.Control
 {
     public class MouseController : MonoBehaviour
     {
-        private IInteractible currentInteractible = null;
+        public GameObject CurrentInteractible { get; private set; } = null;
+
+
+        /// <summary>
+        /// Returns the closest GameObject with available interactible component pointed by mouse
+        /// </summary>
+        public GameObject GetPointedInteractible()
+        {
+            RaycastHit[] raycast = RaycastMouse();
+            if (raycast.Length == 0)
+                return null;
+
+            foreach(var hit in raycast)
+            {
+                Collider collider = hit.collider;
+                if(collider.TryGetComponent(out IInteractible interactible) && interactible.CanInteract)
+                {
+                    return collider.gameObject;
+                }
+            }
+
+            return null;
+        }
 
         // Update is called once per frame
         void Update()
@@ -16,44 +39,37 @@ namespace RoboMed.Control
 
             if (Input.GetMouseButtonDown(0))
             {
-                currentInteractible?.Interact();
+                if (CurrentInteractible == null)
+                    return;
+
+                CurrentInteractible.GetComponent<IInteractible>().Interact();
+
+                foreach (var handler in GetComponents<IInteractionHandler>())
+                {
+                    handler.Interact(CurrentInteractible);
+                }
             }
         }
 
         private void UpdateInteractible()
         {
-            IInteractible pointedInteractible = GetPointedInteractible();
+            GameObject pointedObject = GetPointedInteractible();
+            // Only interactible objects
+            bool interactiblePresent = pointedObject != null && pointedObject.TryGetComponent(out IInteractible interactible) && interactible.CanInteract;
+            GameObject pointedInteractible = interactiblePresent ? pointedObject : null;
 
-            if (currentInteractible != pointedInteractible)
+            if (CurrentInteractible != pointedInteractible)
             {
                 // Inform the previous object
-                currentInteractible?.QuitAvailability();
+                if (CurrentInteractible != null)
+                    CurrentInteractible.GetComponent<IInteractible>().QuitAvailability();
+
                 // Inform the current object
-                pointedInteractible?.EnterAvailability();
+                if(pointedInteractible != null)
+                    pointedInteractible.GetComponent<IInteractible>().EnterAvailability();
             }
 
-            currentInteractible = pointedInteractible;
-        }
-
-        /// <summary>
-        /// Returns the closest interactible pointed by mouse
-        /// </summary>
-        private IInteractible GetPointedInteractible()
-        {
-            RaycastHit[] raycast = RaycastMouse();
-            if (raycast.Length == 0)
-                return null;
-
-            // Find the first interactible
-            foreach(RaycastHit hit in raycast)
-            {
-                if(hit.collider.TryGetComponent(out IInteractible interactible))
-                {
-                    return interactible;
-                }
-            }
-
-            return null;
+            CurrentInteractible = pointedInteractible;
         }
 
         /// <summary>

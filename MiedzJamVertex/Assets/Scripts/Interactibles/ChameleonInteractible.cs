@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace RoboMed.Control
+namespace RoboMed.Interactibles
 {
     /// <summary>
     /// Testowy test
@@ -18,6 +18,8 @@ namespace RoboMed.Control
 
         private MeshRenderer meshRenderer;
 
+        public bool CanInteract { get; set; } = true;
+
         public void EnterAvailability()
         {
             meshRenderer.material = availableMaterial;
@@ -25,7 +27,7 @@ namespace RoboMed.Control
 
         public void Interact()
         {
-            Debug.Log("Wow! You're so good at this game");
+
         }
 
         public void QuitAvailability()
