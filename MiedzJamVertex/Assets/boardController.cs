@@ -7,6 +7,7 @@ public class boardController : MonoBehaviour
     public float newx = 0;
     public float oldx = 0;
     public float brake = 100;
+    public float amount = 0;
     public float currentx = 0;
     public bool state = false;
     Transform tr;
@@ -14,13 +15,15 @@ public class boardController : MonoBehaviour
     void Start()
     {
         tr = gameObject.GetComponent<Transform>();
+        oldx = tr.transform.position.x;
+        newx = oldx + amount;
         currentx = oldx;
     }
 
     private void Update()
     {
         float x = tr.transform.position.x;
-        if (Mathf.Abs(currentx - x) > 10)
+        if (Mathf.Abs(currentx - x) > 5)
             tr.transform.Translate((currentx-x)/100, 0, 0);
     }
 
