@@ -10,10 +10,12 @@ public class boardController : MonoBehaviour
     public float amount = 0;
     public float currentx = 0;
     public bool state = false;
+    public float amount_scaler;
     Transform tr;
     // Start is called before the first frame update
     void Start()
     {
+        amount = Screen.width*amount_scaler;
         tr = gameObject.GetComponent<Transform>();
         oldx = tr.transform.position.x;
         newx = oldx + amount;
@@ -22,6 +24,7 @@ public class boardController : MonoBehaviour
 
     private void Update()
     {
+        amount = Screen.width * amount_scaler;
         float x = tr.transform.position.x;
         if (Mathf.Abs(currentx - x) > 5)
             tr.transform.Translate((currentx-x)/100, 0, 0);
