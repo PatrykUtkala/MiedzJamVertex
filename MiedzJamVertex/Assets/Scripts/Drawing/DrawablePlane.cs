@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace RoboMed.Control.InteractionHandlers
+namespace RoboMed.Drawing
 {
     /// <summary>
     /// Obiekt, po którym można rysować
