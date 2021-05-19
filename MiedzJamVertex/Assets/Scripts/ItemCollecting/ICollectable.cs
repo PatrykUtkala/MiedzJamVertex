@@ -4,15 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RoboMed.ItemMovement
+namespace RoboMed.ItemCollecting
 {
     /// <summary>
     /// Przedmiot, którego pozycja jest resetowana
     /// </summary>
-    interface IRetrievable
+    interface ICollectable
     {
-        bool ShouldRetrieve { get; }
+        bool CanCollect { get; }
 
+        /// <summary>
+        /// Przywraca do domyślnego położenia i rotacji
+        /// </summary>
         void ResetTransform();
+
+        void OnCollected();
     }
 }

@@ -2,6 +2,7 @@
 using RoboMed.Interactibles;
 using System;
 using UnityEngine;
+using RoboMed.ItemCollecting;
 
 namespace RoboMed.ItemMovement
 {
@@ -9,7 +10,7 @@ namespace RoboMed.ItemMovement
     /// Przedmiot trzymany, który podczas spadania zachowuje się w sposób fizyczny
     /// </summary>
     [RequireComponent(typeof(IInteractible))]
-    public class PhysicalHoldable : MonoBehaviour, IHoldable, IRetrievable
+    public class PhysicalHoldable : MonoBehaviour, IHoldable, ICollectable
     {
         private Vector3 startingPosition;
         private Quaternion startingRotation;
@@ -18,7 +19,7 @@ namespace RoboMed.ItemMovement
 
         public MouseFollower Hand { get; set; }
 
-        public bool ShouldRetrieve => GetComponent<Rigidbody>().useGravity;
+        public bool CanCollect => GetComponent<Rigidbody>().useGravity;
 
         public event Action onHeld;
         public event Action onReleased;
@@ -46,6 +47,11 @@ namespace RoboMed.ItemMovement
             transform.position = startingPosition;
             transform.rotation = startingRotation;
 
+            SetPhysical(false);
+        }
+
+        public void OnCollected()
+        {
             SetPhysical(false);
         }
 
