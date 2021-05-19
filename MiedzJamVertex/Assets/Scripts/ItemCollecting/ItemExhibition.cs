@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace RoboMed.ItemCollecting
@@ -12,32 +13,43 @@ namespace RoboMed.ItemCollecting
         /// <summary>
         /// Miejsca do wystawy przedmiotów
         /// </summary>
-        private Transform[] stands;
-        private int occupiedStands = 0;
+        private ItemStand[] stands;
 
-        public int FreeSpace => stands.Length - occupiedStands;
+        public int FreeSpace => stands.Where(s => s.CurrentItem == null).Count();
 
         public bool AddItem(GameObject item)
         {
-            if (occupiedStands == stands.Length)
+            if (FreeSpace == 0)
                 return false;  // brak miejsca
 
-            item.transform.position = stands[occupiedStands].position;
-            item.transform.rotation = stands[occupiedStands].rotation;
+            int posIndex = GetFirstEmpty();
+            stands[posIndex].SetItem(item);
 
-            occupiedStands++;
             return true;
+        }
+
+        /// <summary>
+        /// Zwraca indeks pierwszego wolnego stanowiska
+        /// </summary>
+        private int GetFirstEmpty()
+        {
+            int i = 0;
+            for(; i < stands.Length; i++)
+            {
+                if (stands[i].CurrentItem == null)
+                {
+                    // Znaleziono puste
+                    return i;
+                }
+            }
+
+            // Nie znaleziono
+            return i;
         }
 
         private void Awake()
         {
-            // Inicjalizacja pozycji dzieæmi
-            stands = new Transform[transform.childCount];
-            int i = 0;
-            foreach(Transform child in transform)
-            {
-                stands[i++] = child;
-            }
+            stands = GetComponentsInChildren<ItemStand>();
         }
     }
 }

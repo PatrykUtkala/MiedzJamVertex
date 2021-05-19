@@ -10,7 +10,7 @@ namespace RoboMed.ItemMovement
     /// Przedmiot trzymany, który podczas spadania zachowuje się w sposób fizyczny
     /// </summary>
     [RequireComponent(typeof(IInteractible))]
-    public class PhysicalHoldable : MonoBehaviour, IHoldable, ICollectable
+    public class PhysicalHoldable : MonoBehaviour, IHoldable, ICollectible
     {
         private Vector3 startingPosition;
         private Quaternion startingRotation;
