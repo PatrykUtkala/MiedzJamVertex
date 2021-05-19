@@ -98,7 +98,7 @@ namespace RoboMed.Drawing
             {
                 if(currPoints.Count > 0)
                 {
-                    CopperLine.Main.Add(currPoints);
+                    Solidify();
                     onFinishLine?.Invoke(currPoints);
                 }
 
@@ -122,6 +122,14 @@ namespace RoboMed.Drawing
             return hit.point;
         }
 
+        private void Solidify()
+        {
+            if (currPoints.Count == 0)
+                return;
+
+            CopperLine.Main.Add(currPoints);
+        }
+
         private void ResetAvailableInteractible()
         {
             OnAvailableInteractibleChanged(null);
@@ -136,7 +144,8 @@ namespace RoboMed.Drawing
             // Dodanie pierwszego punktu
             currPoints.Push(GetPointedPoint());
 
-            // TODO: raportowanie do solidyfikatora
+            // Raport
+            Solidify();
         }
         private void ContinueLine()
         {
@@ -146,8 +155,9 @@ namespace RoboMed.Drawing
             {
                 // Punkt kontrolny (odległy od poprzedniego o rozdzielczość)
                 currPoints.Push(pointedPoint);
+
+                Solidify();
             }
-            // TODO: raportowanie do solidyfikatora
         }
 
         private void OnDrawGizmos()
