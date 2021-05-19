@@ -24,7 +24,6 @@ public class boardController : MonoBehaviour
 
     private void Update()
     {
-        amount = Screen.width * amount_scaler;
         float x = tr.transform.position.x;
         if (Mathf.Abs(currentx - x) > 5)
             tr.transform.Translate((currentx-x)/100, 0, 0);
