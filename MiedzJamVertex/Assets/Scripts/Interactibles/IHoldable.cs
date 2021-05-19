@@ -1,5 +1,6 @@
 ﻿using RoboMed.Control;
 using System;
+using UnityEngine;
 
 namespace RoboMed.Interactibles
 {
@@ -8,6 +9,11 @@ namespace RoboMed.Interactibles
     {
         public event Action onHeld;
         public event Action onReleased;
+
+        /// <summary>
+        /// W jakiej orientacji powinien być obiekt, gdy jest trzymany w ręku
+        /// </summary>
+        Quaternion HoldingRotation { get; }
 
         /// <summary>
         /// Called when the object started being held

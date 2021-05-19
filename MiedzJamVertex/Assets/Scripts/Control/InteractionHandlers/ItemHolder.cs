@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using RoboMed.Interactibles;
+using RoboMed.ItemMovement;
 
 namespace RoboMed.Control.InteractionHandlers
 {
@@ -62,6 +63,7 @@ namespace RoboMed.Control.InteractionHandlers
             // Przeniesienie do ręki
             HeldObject.transform.parent = holdPoint;
             HeldObject.transform.position = holdPoint.position;
+            HeldObject.transform.rotation = go.GetComponent<IHoldable>().HoldingRotation; // TODO: smooth-out
             HeldObject.GetComponent<IHoldable>().Hand = GetComponent<MouseFollower>();
 
             HeldObject.GetComponent<IHoldable>().OnHeld();
@@ -73,7 +75,6 @@ namespace RoboMed.Control.InteractionHandlers
                 return;
 
             HeldObject.transform.parent = startingParent;
-            HeldObject.transform.position = startingPosition;
 
             HeldObject.GetComponent<IHoldable>().OnReleased();
             HeldObject = null;
@@ -90,8 +91,10 @@ namespace RoboMed.Control.InteractionHandlers
         public bool CanInteractWith(GameObject interactible)
         {
             if (HeldObject == null)
-                return interactible.GetComponent<IHoldable>() != null;
+                return interactible.GetComponent<IHoldable>() != null; // możliwość podniesienia
 
+            if (interactible.GetComponent<IThrowSpot>() != null)
+                return true;
             if(HeldObject.TryGetComponent(out IInteractionHandler handler) && handler.CanInteractWith(interactible))
                 return true;  // interakcja pochodząca z trzymanego przedmiotu
 

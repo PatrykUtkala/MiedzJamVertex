@@ -147,17 +147,5 @@ namespace RoboMed.Drawing
 
             meshFilter = GetComponent<MeshFilter>();
         }
-
-        private void OnDrawGizmos()
-        {
-            if (meshFilter == null)
-                return;
-
-            Gizmos.color = Color.red;
-            foreach(var vertex in meshFilter.mesh.vertices)
-            {
-                Gizmos.DrawSphere(vertex, 0.1f);
-            }
-        }
     }
 }

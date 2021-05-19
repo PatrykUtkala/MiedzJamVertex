@@ -2,15 +2,11 @@
 using RoboMed.Interactibles;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
-using RoboMed.Control;
 
 namespace RoboMed.Drawing
 {
-    public class PathMarker : MonoBehaviour, IInteractionHandler, IHoldable
+    public class PathMarker : MonoBehaviour, IInteractionHandler
     {
         static float maxDistance = 50f; // maksymalna odległość od kamery
 
@@ -19,8 +15,6 @@ namespace RoboMed.Drawing
         [SerializeField] Transform wandEnd;
 
         public event Action<Stack<Vector3>> onFinishLine;
-        public event Action onHeld;
-        public event Action onReleased;
 
         private GameObject pointedObject;
         private Quaternion startingRotation; // obrót sprzed wskazywania
@@ -31,8 +25,6 @@ namespace RoboMed.Drawing
         private bool isDrawing = false;
         private bool drewThisFrame = false;
         private Stack<Vector3> currPoints = new Stack<Vector3>();
-
-        public MouseFollower Hand { get; set; }
 
         public bool CanInteractWith(GameObject interactible) => interactible != null && interactible.GetComponent<DrawablePlane>() != null;
 
@@ -58,15 +50,16 @@ namespace RoboMed.Drawing
             {
                 pointedObject = newInteractible;
 
-                startingDistanceFromPointed = Hand.DistanceFromPointed;
-                Hand.DistanceFromPointed = length;
+                IHoldable holdable = GetComponent<IHoldable>();
+                startingDistanceFromPointed = holdable.Hand.DistanceFromPointed;
+                holdable.Hand.DistanceFromPointed = length;
             }
             else
             {
                 // Reset
                 if(pointedObject != null)
                 {
-                    Hand.DistanceFromPointed = startingDistanceFromPointed;
+                    GetComponent<IHoldable>().Hand.DistanceFromPointed = startingDistanceFromPointed;
                 }
 
                 pointedObject = null;
@@ -79,6 +72,16 @@ namespace RoboMed.Drawing
             startingRotation = transform.rotation;
 
             length = Vector3.Distance(transform.position, wandEnd.position);
+        }
+
+        private void OnEnable()
+        {
+            GetComponent<IHoldable>().onReleased += ResetAvailableInteractible;
+        }
+
+        private void OnDisable()
+        {
+            GetComponent<IHoldable>().onReleased -= ResetAvailableInteractible;
         }
 
         private void Update()
@@ -119,18 +122,9 @@ namespace RoboMed.Drawing
             return hit.point;
         }
 
-        public void OnHeld()
+        private void ResetAvailableInteractible()
         {
-            GetComponent<IInteractible>().CanInteract = false;
-            onHeld?.Invoke();
-        }
-
-        public void OnReleased()
-        {
-            GetComponent<IInteractible>().CanInteract = true;
-
             OnAvailableInteractibleChanged(null);
-            onReleased?.Invoke();
         }
 
 
@@ -141,6 +135,8 @@ namespace RoboMed.Drawing
             currPoints = new Stack<Vector3>();
             // Dodanie pierwszego punktu
             currPoints.Push(GetPointedPoint());
+
+            // TODO: raportowanie do solidyfikatora
         }
         private void ContinueLine()
         {
@@ -151,6 +147,7 @@ namespace RoboMed.Drawing
                 // Punkt kontrolny (odległy od poprzedniego o rozdzielczość)
                 currPoints.Push(pointedPoint);
             }
+            // TODO: raportowanie do solidyfikatora
         }
 
         private void OnDrawGizmos()
