@@ -17,15 +17,15 @@ public class boardController : MonoBehaviour
     {
         amount = Screen.width*amount_scaler;
         tr = gameObject.GetComponent<Transform>();
-        oldx = tr.transform.position.x;
-        newx = oldx + amount;
+        oldx = tr.transform.position.x - 20;
+        newx = oldx + amount + 20;
         currentx = oldx;
     }
 
     private void Update()
     {
         float x = tr.transform.position.x;
-        if (Mathf.Abs(currentx - x) > 5)
+        if (Mathf.Abs(currentx - x) > 20)
             tr.transform.Translate((currentx-x)/100, 0, 0);
     }
 

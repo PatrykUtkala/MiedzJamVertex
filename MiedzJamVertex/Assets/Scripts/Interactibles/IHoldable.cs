@@ -7,8 +7,8 @@ namespace RoboMed.Interactibles
     // An object that can be held
     interface IHoldable
     {
-        public event Action onHeld;
-        public event Action onReleased;
+        event Action onHeld;
+        event Action onReleased;
 
         /// <summary>
         /// W jakiej orientacji powinien być obiekt, gdy jest trzymany w ręku
