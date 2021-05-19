@@ -30,16 +30,19 @@ namespace RoboMed.Drawing
 
         public void InteractWith(GameObject interactible)
         {
-            StartNewLine();
+            if (!TryGetPointedPoint(out Vector3 pointedPoint))
+                return;  // nie jest wskazywany punkt na colliderze pochodzącym z pointedObject
+
+            StartNewLine(pointedPoint);
             drewThisFrame = true;
             isDrawing = true;
         }
 
         public void ContinueInteraction(GameObject interactible)
         {
-            if (isDrawing)
+            if (isDrawing && TryGetPointedPoint(out Vector3 pointedPoint))
             {
-                ContinueLine();
+                ContinueLine(pointedPoint);
                 drewThisFrame = true;
             }
         }
@@ -63,7 +66,6 @@ namespace RoboMed.Drawing
                 }
 
                 pointedObject = null;
-                transform.rotation = startingRotation;
             }
         }
 
@@ -86,9 +88,14 @@ namespace RoboMed.Drawing
 
         private void Update()
         {
-            if (pointedObject != null)
+            if (pointedObject != null && TryGetPointedPoint(out Vector3 pointedPoint))
             {
-                PointAt(GetPointedPoint());
+                PointAt(pointedPoint);
+            }
+            else
+            {
+                // Nie jest wskazywany poprawny punkt
+                transform.rotation = startingRotation;
             }
         }
 
@@ -118,8 +125,18 @@ namespace RoboMed.Drawing
         {
             Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            bool raycastSuccess = pointedObject.GetComponent<Collider>().Raycast(mouseRay, out RaycastHit hit, maxDistance);
+            pointedObject.GetComponent<Collider>().Raycast(mouseRay, out RaycastHit hit, maxDistance);
             return hit.point;
+        }
+
+        private bool TryGetPointedPoint(out Vector3 point)
+        {
+            Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            bool raycastSuccess = pointedObject.GetComponent<Collider>().Raycast(mouseRay, out RaycastHit hit, maxDistance);
+            point = hit.point;
+
+            return raycastSuccess;
         }
 
         private void Solidify()
@@ -137,24 +154,22 @@ namespace RoboMed.Drawing
 
 
         /***************** Tworzenie ścieżki *******************/
-        private void StartNewLine()
+        private void StartNewLine(Vector3 point)
         {
             // Reset
             currPoints = new Stack<Vector3>();
             // Dodanie pierwszego punktu
-            currPoints.Push(GetPointedPoint());
+            currPoints.Push(point);
 
             // Raport
             Solidify();
         }
-        private void ContinueLine()
+        private void ContinueLine(Vector3 point)
         {
-            Vector3 pointedPoint = GetPointedPoint();
-
-            if (Vector3.Distance(pointedPoint, currPoints.Peek()) >= resolution)
+            if (Vector3.Distance(point, currPoints.Peek()) >= resolution)
             {
                 // Punkt kontrolny (odległy od poprzedniego o rozdzielczość)
-                currPoints.Push(pointedPoint);
+                currPoints.Push(point);
 
                 Solidify();
             }
