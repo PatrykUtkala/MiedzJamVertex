@@ -14,10 +14,13 @@ namespace RoboMed.Drawing
     {
         static float maxDistance = 50f; // maksymalna odległość od kamery
 
+        [Tooltip("Odległość między kolejnymi punktami kontrolnymi")]
         [SerializeField] float resolution = 1f;
         [SerializeField] Transform wandEnd;
 
         public event Action<Stack<Vector3>> onFinishLine;
+        public event Action onHeld;
+        public event Action onReleased;
 
         private GameObject pointedObject;
         private Quaternion startingRotation; // obrót sprzed wskazywania
@@ -119,6 +122,7 @@ namespace RoboMed.Drawing
         public void OnHeld()
         {
             GetComponent<IInteractible>().CanInteract = false;
+            onHeld?.Invoke();
         }
 
         public void OnReleased()
@@ -126,6 +130,7 @@ namespace RoboMed.Drawing
             GetComponent<IInteractible>().CanInteract = true;
 
             OnAvailableInteractibleChanged(null);
+            onReleased?.Invoke();
         }
 
 
