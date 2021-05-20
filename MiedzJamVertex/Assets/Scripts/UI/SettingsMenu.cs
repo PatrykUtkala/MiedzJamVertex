@@ -39,7 +39,7 @@ public class SettingsMenu : MonoBehaviour
         ResolutionDropdown.value = CurrentResolutionIndex;
         ResolutionDropdown.RefreshShownValue();
 
-        VolumeSlider.value = PlayerPrefs.GetFloat("volume", 0);
+        VolumeSlider.value = PlayerPrefs.GetFloat("Volume", 0);
         FullScreenToggle.isOn = Screen.fullScreen;
         //GraphicsDropdown.value = PlayerPrefs.GetInt("qualityIndex", 5);
     }
@@ -53,8 +53,8 @@ public class SettingsMenu : MonoBehaviour
 
     public void SetVolume(float volume)
     {
-        PlayerPrefs.SetFloat("volume", volume);
-        AudioMixer.SetFloat("volume", volume);
+        PlayerPrefs.SetFloat("Volume", volume);
+        AudioMixer.SetFloat("Volume", volume);
     }
 
 
