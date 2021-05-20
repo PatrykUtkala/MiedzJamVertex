@@ -144,7 +144,7 @@ namespace RoboMed.Drawing
             if (currPoints.Count == 0)
                 return;
 
-            CopperLine.Main.Add(currPoints);
+            CopperLine.Drawable.AddOverwrite(currPoints);
         }
 
         private void ResetAvailableInteractible()
@@ -180,13 +180,12 @@ namespace RoboMed.Drawing
             if (currPoints == null)
                 return;
 
+            Gizmos.color = Color.yellow;
             GizmosDrawLine(currPoints);
         }
 
-        private void GizmosDrawLine(Stack<Vector3> line)
+        public static void GizmosDrawLine(Stack<Vector3> line)
         {
-            Gizmos.color = Color.yellow;
-
             int i = 0;
             Vector3 prev = Vector3.zero;
 

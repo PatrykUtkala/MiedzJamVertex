@@ -15,7 +15,7 @@ namespace RoboMed.ItemCollecting
         enum CollisionType { Collision, Trigger};
 
         [SerializeField] CollisionType detection;
-        [Tooltip("Zbierająca kolekcja z komponentem. Jeśli brak, odstawia na domyślne miejsce.")]
+        [Tooltip("Zbierająca kolekcja z komponentem IItemCollection. Jeśli brak, odstawia na domyślne miejsce.")]
         [SerializeField] GameObject itemCollection;
 
         protected void TryCollect(GameObject go)
