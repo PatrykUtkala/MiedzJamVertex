@@ -1287,6 +1287,7 @@ MonoBehaviour:
   instantiateFromChildren: 0
   thickness: 0.2
   yLift: 0.1
+  minDistance: 0.3
 --- !u!33 &1319963304
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1385,6 +1386,7 @@ MonoBehaviour:
   instantiateFromChildren: 1
   thickness: 0.2
   yLift: 0.1
+  minDistance: 0.3
 --- !u!33 &1421256074
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1601,6 +1603,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   connections:
   - {fileID: 1936746701}
+  - {fileID: 845709752}
   isStart: 0
 --- !u!4 &1900889210
 Transform:

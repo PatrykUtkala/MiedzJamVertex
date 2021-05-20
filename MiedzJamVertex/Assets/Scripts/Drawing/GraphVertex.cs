@@ -18,8 +18,6 @@ namespace RoboMed.Drawing
         /// </summary>
         public bool IsFork => connections != null && connections.Length > 1;
 
-        private bool initialized = false;
-
         /// <summary>
         /// Zwraca najdłuższą ścieżkę bez rozwidleń z tego punktu
         /// </summary>
@@ -67,29 +65,6 @@ namespace RoboMed.Drawing
             return lines;
         }
 
-        private void Awake()
-        {
-            if (Application.isPlaying)
-                return;
-
-            if (initialized)
-                return;  // oh no, not again
-            initialized = true;
-
-            connections = new GraphVertex[1];
-
-            // Domyślne połączenie z wcześniejszym wierzchołkiem
-            int selfIndex = transform.GetSiblingIndex();
-            if (selfIndex == 0)
-                return;  // Pierwszy wierzchołek - brak poprzedniego
-
-            if (transform.parent.GetChild(selfIndex - 1).TryGetComponent(out GraphVertex vertex))
-            {
-                // Łączenie
-                connections[0] = vertex;
-            }
-        }
-
         private void OnDrawGizmos()
         {
             Gizmos.color = isStart ? Color.red : Color.yellow;
@@ -112,6 +87,22 @@ namespace RoboMed.Drawing
                 Gizmos.DrawLine(middle, arrowLeft);
                 Vector3 arrowRight = middle - Quaternion.Euler(0, -30f, 0) * (target.transform.position - transform.position).normalized * 0.2f;
                 Gizmos.DrawLine(middle, arrowRight);
+            }
+        }
+
+        private void Reset()
+        {
+            connections = new GraphVertex[1];
+
+            // Domyślne połączenie z wcześniejszym wierzchołkiem
+            int selfIndex = transform.GetSiblingIndex();
+            if (selfIndex == 0)
+                return;  // Pierwszy wierzchołek - brak poprzedniego
+
+            if (transform.parent.GetChild(selfIndex - 1).TryGetComponent(out GraphVertex vertex))
+            {
+                // Łączenie
+                connections[0] = vertex;
             }
         }
     }
