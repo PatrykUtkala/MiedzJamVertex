@@ -114,23 +114,5 @@ namespace RoboMed.Drawing
                 Gizmos.DrawLine(middle, arrowRight);
             }
         }
-
-        private void OnDrawGizmosSelected()
-        {
-            Gizmos.color = Color.red;
-
-            foreach(Stack<GraphVertex> line in GetAllLines())
-            {
-                Stack<Vector3> vertexPositions = new Stack<Vector3>();
-                foreach (var vertex in line)
-                {
-                    if (vertex == null)
-                        continue;
-
-                    vertexPositions.Push(vertex.transform.position);
-                }
-                PathMarker.GizmosDrawLine(vertexPositions);
-            }
-        }
     }
 }

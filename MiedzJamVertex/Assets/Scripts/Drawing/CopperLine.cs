@@ -24,8 +24,9 @@ namespace RoboMed.Drawing
 
         protected List<Vector3[]> lines = new List<Vector3[]>();
 
-        public bool IsDrawableConnected()
+        public bool IsDrawableConnected(out Vector3 connectionPoint)
         {
+            connectionPoint = Vector3.zero;
             if(Drawable == null)
             {
                 Debug.LogWarning("Brak instancji CopperLine do rysowania");
@@ -37,11 +38,32 @@ namespace RoboMed.Drawing
                 foreach(Vector3 point in line)
                 {
                     if (IsConnected(point))
+                    {
+                        connectionPoint = point;
                         return true;
+                    }
                 }
             }
 
             return false;
+        }
+
+        public List<Vector3> GetConnectionPointsWith(CopperLine other)
+        {
+            List<Vector3> connectionPoints = new List<Vector3>();
+
+            foreach (Vector3[] line in other.lines)
+            {
+                foreach (Vector3 point in line)
+                {
+                    if (IsConnected(point))
+                    {
+                        connectionPoints.Add(point);
+                    }
+                }
+            }
+
+            return connectionPoints;
         }
 
         /// <summary>

@@ -12,9 +12,16 @@ public class CopperLineEditor : Editor
         CopperLine line = (CopperLine)target;
         if(GUILayout.Button("Check drawn connected"))
         {
-            if (line.IsDrawableConnected())
+            if (line.IsDrawableConnected(out Vector3 connectionPoint))
             {
-                Debug.Log(line + " po³¹czony z rysunkiem");
+                Debug.Log(line + " po³¹czony z rysunkiem w punkcie " + connectionPoint);
+                string str = "";
+                foreach(Vector3 point in line.GetConnectionPointsWith(CopperLine.Drawable))
+                {
+                    str += point + ", ";
+                }
+
+                Debug.Log("Punkty: " + str);
             }
             else
             {
