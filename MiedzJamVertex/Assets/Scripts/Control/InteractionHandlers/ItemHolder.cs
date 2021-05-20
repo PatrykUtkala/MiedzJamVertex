@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using RoboMed.Interactibles;
 using RoboMed.ItemMovement;
+using System;
 
 namespace RoboMed.Control.InteractionHandlers
 {
@@ -8,6 +9,9 @@ namespace RoboMed.Control.InteractionHandlers
     {
         [Tooltip("Miejsce, w którym jest trzymany obiekt")]
         [SerializeField] Transform holdPoint;
+
+        public event Action onHeld;
+        public event Action onReleased;
 
         public GameObject HeldObject { get; private set; } = null;
 
@@ -67,6 +71,8 @@ namespace RoboMed.Control.InteractionHandlers
             HeldObject.GetComponent<IHoldable>().Hand = GetComponent<MouseFollower>();
 
             HeldObject.GetComponent<IHoldable>().OnHeld();
+
+            onHeld?.Invoke();
         }
 
         private void ReleaseObject()
@@ -78,6 +84,8 @@ namespace RoboMed.Control.InteractionHandlers
 
             HeldObject.GetComponent<IHoldable>().OnReleased();
             HeldObject = null;
+
+            onReleased?.Invoke();
         }
 
         private void Update()

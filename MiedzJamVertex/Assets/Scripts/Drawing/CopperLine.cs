@@ -1,64 +1,195 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace RoboMed.Drawing
 {
-    [RequireComponent(typeof(MeshFilter))]
+    [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
     public class CopperLine : MonoBehaviour
     {
-        public static CopperLine Main { get; private set; }
+        public static CopperLine Drawable { get; private set; }
 
+        [SerializeField] bool isDrawable;
+        [SerializeField] bool instantiateFromChildren = false;
+        [Header("Parametry linii")]
         [SerializeField] float thickness = 0.2f;
         [SerializeField] float yLift = 0.1f;
+        [Header("Walidacja")]
+        [Tooltip("Odległość, poniżej której inne punkty są traktowane jak połączone z tą linią")]
+        public float minDistance = 0.3f;
 
-        private MeshFilter meshFilter;
+        protected MeshFilter meshFilter;
 
-        private Vector3[] perpendiculars;
+        protected List<Vector3[]> lines = new List<Vector3[]>();
 
+        public bool IsDrawableConnected(out Vector3 connectionPoint)
+        {
+            connectionPoint = Vector3.zero;
+            if(Drawable == null)
+            {
+                Debug.LogWarning("Brak instancji CopperLine do rysowania");
+                return false;
+            }
+
+            foreach(Vector3[] line in Drawable.lines)
+            {
+                foreach(Vector3 point in line)
+                {
+                    if (IsConnected(point))
+                    {
+                        connectionPoint = point;
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        public List<Vector3> GetConnectionPointsWith(CopperLine other)
+        {
+            List<Vector3> connectionPoints = new List<Vector3>();
+
+            foreach (Vector3[] line in other.lines)
+            {
+                foreach (Vector3 point in line)
+                {
+                    if (IsConnected(point))
+                    {
+                        connectionPoints.Add(point);
+                    }
+                }
+            }
+
+            return connectionPoints;
+        }
+
+        /// <summary>
+        /// Sprawdza, czy dany punkt łączy się z liniami
+        /// </summary>
+        public bool IsConnected(Vector3 point)
+        {
+            foreach(Vector3[] line in lines)
+            {
+                // Sprawdzanie, czy któryś odcinek jest połączony z point
+                for (int i = 0; i < line.Length - 1; i++)
+                {
+                    float distance = DistancePointLine(point, line[i], line[i + 1]);
+                    if(distance < minDistance)
+                        return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Tworzy mesha ścieżki na podstawie dzieci będących wierzchołkami grafu
+        /// </summary>
+        public void InstantianteFromChildren()
+        {
+            List<GraphVertex> keyVertices = new List<GraphVertex>();
+
+            foreach(Transform child in transform)
+            {
+                if(child.TryGetComponent(out GraphVertex vertex)) {
+                    if (vertex.IsFork || vertex.isStart)
+                    {
+                        keyVertices.Add(vertex);
+                    }
+                }
+            }
+
+            bool first = true;
+            foreach(var vertex in keyVertices)
+            {
+                foreach(var line in vertex.GetAllLines())
+                {
+                    Stack<Vector3> ln = new Stack<Vector3>(line.Select(gv => gv.transform.position));
+                    if (first)
+                    {
+                        AddOverwrite(ln);
+                    }
+                    else
+                    {
+                        Add(ln);
+                    }
+
+                    first = false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Zastępuje poprzednie linie nową
+        /// </summary>
+        public void AddOverwrite(Stack<Vector3> line)
+        {
+            lines = new List<Vector3[]>();
+            lines.Add(line.ToArray());
+
+            meshFilter.mesh = LineToMesh(line);
+        }
+
+        /// <summary>
+        /// Łączy nową linię z istniejącymi
+        /// </summary>
         public void Add(Stack<Vector3> line)
         {
             Mesh newMesh = LineToMesh(line);
-            meshFilter.mesh = newMesh;
 
-            // TODO: połączenie z istniejącymi liniami
+            CombineInstance[] combine = new CombineInstance[2];
+            combine[0].mesh = newMesh;
+            combine[1].mesh = meshFilter.sharedMesh;
+
+            Mesh combinedMesh = new Mesh();
+            combinedMesh.CombineMeshes(combine, true, false);
+            meshFilter.mesh = combinedMesh;
+
+            lines.Add(line.ToArray());
         }
 
-        private Mesh LineToMesh(Stack<Vector3> line)
+        protected Mesh LineToMesh(Stack<Vector3> line)
         {
             if (line.Count == 1)
-                return GetPoint(line.Peek());
+                return GetPointMesh(line.Peek());
 
-            Vector3[] lineCopy = line.ToArray();
+            Vector3[] localLine = line.ToArray();
+            // Zamiana na lokalne punkty
+            for(int j = 0; j < localLine.Length; j++)
+            {
+                localLine[j] = transform.InverseTransformPoint(localLine[j]);
+            }
+
             Vector3[] vertices = new Vector3[line.Count * 2];
 
-            perpendiculars = new Vector3[line.Count];
             int i = 0;
-            foreach (Vector3 point in line)
+            foreach (Vector3 localPoint in localLine)
             {
                 Vector3 perpendicular;
                 if (i == 0)
                 {
-                    perpendicular = lineCopy[i + 1] - point;
+                    perpendicular = localLine[i + 1] - localPoint;
                     perpendicular = Quaternion.AngleAxis(90f, Vector3.up) * perpendicular;
                 }
                 else if (i == line.Count - 1)
                 {
-                    perpendicular = point - lineCopy[i - 1];
+                    perpendicular = localPoint - localLine[i - 1];
                     perpendicular = Quaternion.AngleAxis(90f, Vector3.up) * perpendicular;
                 }
                 else
                 {
-                    perpendicular = (lineCopy[i - 1] - point).normalized + (lineCopy[i + 1] - point).normalized;
+                    perpendicular = (localLine[i - 1] - localPoint).normalized + (localLine[i + 1] - localPoint).normalized;
                     if (perpendicular == Vector3.zero)
                     {
                         // Przypadek, gdy punkty leżą w jednej linii prostej
-                        perpendicular = point - lineCopy[i - 1];
+                        perpendicular = localPoint - localLine[i - 1];
                         perpendicular = Quaternion.AngleAxis(90f, Vector3.up) * perpendicular;
                     }
                     // Odwracanie prostopadłych linii w jedną stronę
-                    Vector3 tangent = -lineCopy[i - 1] + lineCopy[i + 1]; // styczna w punkcie łamanej
+                    Vector3 tangent = -localLine[i - 1] + localLine[i + 1]; // styczna w punkcie łamanej
                     if (Vector3.Cross(tangent, perpendicular).y < 0)
                     {
                         perpendicular = -perpendicular;
@@ -66,11 +197,8 @@ namespace RoboMed.Drawing
                 }
                 perpendicular.Normalize();
 
-
-                perpendiculars[i] = perpendicular;
-
-                vertices[2 * i] = point + perpendicular * thickness + Vector3.up * yLift;
-                vertices[2 * i + 1] = point - perpendicular * thickness + Vector3.up * yLift;
+                vertices[2 * i] = localPoint + perpendicular * thickness + Vector3.up * yLift;
+                vertices[2 * i + 1] = localPoint - perpendicular * thickness + Vector3.up * yLift;
 
                 i++;
             }
@@ -107,7 +235,7 @@ namespace RoboMed.Drawing
             return mesh;
         }
 
-        private Mesh GetPoint(Vector3 point)
+        private Mesh GetPointMesh(Vector3 point)
         {
             Mesh mesh = new Mesh();
 
@@ -138,14 +266,38 @@ namespace RoboMed.Drawing
             return mesh;
         }
 
+        public static float DistancePointLine(Vector3 point, Vector3 lineStart, Vector3 lineEnd)
+        {
+            return Vector3.Magnitude(ProjectPointLine(point, lineStart, lineEnd) - point);
+        }
+
+        public static Vector3 ProjectPointLine(Vector3 point, Vector3 lineStart, Vector3 lineEnd)
+        {
+            Vector3 rhs = point - lineStart;
+            Vector3 vector2 = lineEnd - lineStart;
+            float magnitude = vector2.magnitude;
+            Vector3 lhs = vector2;
+            if (magnitude > Mathf.Epsilon)
+            {
+                lhs = (Vector3)(lhs / magnitude);
+            }
+            float num2 = Mathf.Clamp(Vector3.Dot(lhs, rhs), 0f, magnitude);
+            return (lineStart + ((Vector3)(lhs * num2)));
+        }
+
         private void Awake()
         {
-            if(Main == null)
+            if(Drawable == null && isDrawable)
             {
-                Main = this;
+                Drawable = this;
             }
 
             meshFilter = GetComponent<MeshFilter>();
+
+            if (instantiateFromChildren)
+            {
+                InstantianteFromChildren();
+            }
         }
     }
 }

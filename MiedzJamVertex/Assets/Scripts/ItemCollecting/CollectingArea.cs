@@ -8,23 +8,23 @@ using UnityEngine;
 namespace RoboMed.ItemCollecting
 {
     /// <summary>
-    /// Obszar, po wejściu do którego przedmioty IRetrievable są cofane
+    /// Obszar, po wejściu do którego przedmioty są zbierane lub cofane na domyślne pozycje
     /// </summary>
     public class CollectingArea : MonoBehaviour
     {
         enum CollisionType { Collision, Trigger};
 
         [SerializeField] CollisionType detection;
-        [Tooltip("Zbierająca kolekcja z komponentem. Jeśli brak, odstawia na domyślne miejsce.")]
+        [Tooltip("Zbierająca kolekcja z komponentem IItemCollection. Jeśli brak, odstawia na domyślne miejsce.")]
         [SerializeField] GameObject itemCollection;
 
-        protected void TryRetrieve(GameObject go)
+        protected void TryCollect(GameObject go)
         {
-            ICollectable retrievable = go.GetComponent<ICollectable>();
-            if (retrievable == null)
+            ICollectible collectible = go.GetComponent<ICollectible>();
+            if (collectible == null)
                 return;
 
-            if (retrievable.CanCollect)
+            if (collectible.CanCollect)
             {
                 bool collected = false;
                 if(itemCollection != null)
@@ -34,10 +34,10 @@ namespace RoboMed.ItemCollecting
 
                 if (!collected)
                 {
-                    retrievable.ResetTransform();
+                    collectible.ResetTransform();
                 }
 
-                retrievable.OnCollected();
+                collectible.OnCollected();
             }
         }
 
@@ -46,7 +46,7 @@ namespace RoboMed.ItemCollecting
             if (detection != CollisionType.Trigger)
                 return;
 
-            TryRetrieve(other.gameObject);
+            TryCollect(other.gameObject);
         }
 
         private void OnCollisionEnter(Collision collision)
@@ -54,14 +54,14 @@ namespace RoboMed.ItemCollecting
             if (detection != CollisionType.Collision)
                 return;
 
-            TryRetrieve(collision.gameObject);
+            TryCollect(collision.gameObject);
         }
 
         private void Awake()
         {
             if(itemCollection != null && itemCollection.GetComponent<IItemCollection>() == null)
             {
-                Debug.LogError("Item Collection nie ma komponentu IItemCollection");
+                Debug.LogError(this + ": Item Collection nie ma komponentu IItemCollection");
             }
         }
     }

@@ -9,7 +9,7 @@ namespace RoboMed.ItemCollecting
     /// <summary>
     /// Przedmiot, którego pozycja jest resetowana
     /// </summary>
-    interface ICollectable
+    interface ICollectible
     {
         bool CanCollect { get; }
 

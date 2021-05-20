@@ -33,6 +33,23 @@ namespace RoboMed.Control
             return null;
         }
 
+        public bool TryGetPointedPoint(out Vector3 point, float maxDistance)
+        {
+            point = Vector3.zero;
+
+            Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            GameObject pointedObject = GetPointedInteractible();
+            bool pointsInteractible = pointedObject != null && pointedObject.TryGetComponent(out IInteractible interactible) && interactible.CanInteract;
+            if (!pointsInteractible)
+                return false;
+
+            // Uzyskanie wskazywanego punktu na obiekcie
+            pointedObject.GetComponent<Collider>().Raycast(mouseRay, out RaycastHit hit, maxDistance);
+            point = hit.point;
+            return true;
+        }
+
         private void Awake()
         {
             handlers = GetComponents<IInteractionHandler>();
