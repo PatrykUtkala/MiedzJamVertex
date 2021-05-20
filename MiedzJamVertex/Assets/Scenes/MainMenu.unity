@@ -454,26 +454,6 @@ PrefabInstance:
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
-    - target: {fileID: 1348270954165290782, guid: 65c5ab89954b2c640a9aa34ce7d116b6, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1348270954165290782, guid: 65c5ab89954b2c640a9aa34ce7d116b6, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1348270954165290782, guid: 65c5ab89954b2c640a9aa34ce7d116b6, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4862175578988563041, guid: 65c5ab89954b2c640a9aa34ce7d116b6, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4862175578988563041, guid: 65c5ab89954b2c640a9aa34ce7d116b6, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6670105969338751750, guid: 65c5ab89954b2c640a9aa34ce7d116b6, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 29
@@ -505,14 +485,6 @@ PrefabInstance:
     - target: {fileID: 6670105969732717243, guid: 65c5ab89954b2c640a9aa34ce7d116b6, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 6670105970230393577, guid: 65c5ab89954b2c640a9aa34ce7d116b6, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6670105970320261194, guid: 65c5ab89954b2c640a9aa34ce7d116b6, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6670105971051375672, guid: 65c5ab89954b2c640a9aa34ce7d116b6, type: 3}
       propertyPath: m_Pivot.x
