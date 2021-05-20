@@ -9,14 +9,14 @@ namespace RoboMed.Drawing
     public class GraphVertex : MonoBehaviour
     {
         [Tooltip("Skierowane połączenia z tego punktu")]
-        [SerializeField] GraphVertex[] connections;
+        [SerializeField] List<GraphVertex> connections = new List<GraphVertex>();
 
         public bool isStart = false;
 
         /// <summary>
         /// Czy wierzchołek posiada więcej niż jedną krawędź wychodzącą
         /// </summary>
-        public bool IsFork => connections != null && connections.Length > 1;
+        public bool IsFork => connections != null && connections.Count > 1;
 
         /// <summary>
         /// Zwraca najdłuższą ścieżkę bez rozwidleń z tego punktu
@@ -29,7 +29,7 @@ namespace RoboMed.Drawing
             {
                 line.Push(currentVertex);
                 // Kończymy, gdy napotkamy punkt końcowy lub rozwidlenie
-                bool isStraight = currentVertex.connections != null && currentVertex.connections.Length == 1;
+                bool isStraight = currentVertex.connections != null && currentVertex.connections.Count == 1;
                 if (!isStraight)
                     break;
 
@@ -48,20 +48,34 @@ namespace RoboMed.Drawing
         {
             List<Stack<GraphVertex>> lines = new List<Stack<GraphVertex>>();
 
-            for(int i = 0; i < connections.Length; i++)
+            foreach(GraphVertex direction in connections)
             {
+                if (direction == null)
+                    continue;
+
                 Stack<GraphVertex> line = new Stack<GraphVertex>();
                 line.Push(this); // ten wierzchołek jako początkowy
-
-                GraphVertex direction = connections[i];
-                if (direction != null)
-                {
-                    direction.LoadLongestLine(line);
-                    lines.Add(line);
-                }
+                direction.LoadLongestLine(line);
+                lines.Add(line);
             }
 
             return lines;
+        }
+
+        /// <summary>
+        /// Tworzy krawędź do poprzedniego elementu w hierarchii
+        /// </summary>
+        public void LinkToPrevious()
+        {
+            int selfIndex = transform.GetSiblingIndex();
+            if (selfIndex == 0)
+                return;  // Pierwszy wierzchołek - brak poprzedniego
+
+            if (transform.parent.GetChild(selfIndex - 1).TryGetComponent(out GraphVertex prevVertex))
+            {
+                // Łączenie
+                connections.Add(prevVertex);
+            }
         }
 
         private void OnDrawGizmos()
@@ -86,22 +100,6 @@ namespace RoboMed.Drawing
                 Gizmos.DrawLine(middle, arrowLeft);
                 Vector3 arrowRight = middle - Quaternion.Euler(0, -30f, 0) * (target.transform.position - transform.position).normalized * 0.2f;
                 Gizmos.DrawLine(middle, arrowRight);
-            }
-        }
-
-        private void Reset()
-        {
-            connections = new GraphVertex[1];
-
-            // Domyślne połączenie z wcześniejszym wierzchołkiem
-            int selfIndex = transform.GetSiblingIndex();
-            if (selfIndex == 0)
-                return;  // Pierwszy wierzchołek - brak poprzedniego
-
-            if (transform.parent.GetChild(selfIndex - 1).TryGetComponent(out GraphVertex vertex))
-            {
-                // Łączenie
-                connections[0] = vertex;
             }
         }
     }
