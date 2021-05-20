@@ -14,16 +14,22 @@ namespace RoboMed.Control
         [SerializeField] float distanceFromCamera = 5f;
         [SerializeField] float distanceFromPointed = 2f;
         [SerializeField] float movementSpeed = 5f;
+        [SerializeField] float rotationSpeed = 5f;
 
         public float DistanceFromPointed { get; set; }
 
         private Vector3 targetPosition;
+        private Quaternion targetRotation;
 
         private MouseController mouseController;
 
+        private Quaternion straightRotation;
+        private Quaternion interactingRotation;
+
         private void Awake()
         {
-            targetPosition = transform.position;
+            targetPosition = controlledObject.position;
+            targetRotation = controlledObject.rotation;
             DistanceFromPointed = distanceFromPointed;
 
             mouseController = GetComponent<MouseController>();
@@ -33,11 +39,16 @@ namespace RoboMed.Control
         void Update()
         {
             targetPosition = GetMousePoint();
+
+            // Obracanie adaptacyjne
+            Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+            targetRotation = Quaternion.LookRotation(mouseRay.direction);
         }
 
         private void LateUpdate()
         {
             controlledObject.position = Vector3.Lerp(controlledObject.position, targetPosition, Time.deltaTime * movementSpeed);
+            controlledObject.rotation = Quaternion.Lerp(controlledObject.rotation, targetRotation, Time.deltaTime * rotationSpeed);
         }
 
         private Vector3 GetMousePoint()

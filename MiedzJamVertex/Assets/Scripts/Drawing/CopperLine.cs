@@ -140,10 +140,13 @@ namespace RoboMed.Drawing
         {
             Mesh newMesh = LineToMesh(line);
 
-            CombineInstance[] combine = new CombineInstance[1];
+            CombineInstance[] combine = new CombineInstance[2];
             combine[0].mesh = newMesh;
+            combine[1].mesh = meshFilter.sharedMesh;
 
-            meshFilter.mesh.CombineMeshes(combine);
+            Mesh combinedMesh = new Mesh();
+            combinedMesh.CombineMeshes(combine, true, false);
+            meshFilter.mesh = combinedMesh;
 
             lines.Add(line.ToArray());
         }

@@ -44,9 +44,9 @@ namespace RoboMed.Drawing
         /// Zwraca ścieżkę do następnego rozwidlenia w każdą stronę
         /// </summary>
         /// <returns></returns>
-        public Stack<GraphVertex>[] GetAllLines()
+        public List<Stack<GraphVertex>> GetAllLines()
         {
-            Stack<GraphVertex>[] lines = new Stack<GraphVertex>[connections.Length];
+            List<Stack<GraphVertex>> lines = new List<Stack<GraphVertex>>();
 
             for(int i = 0; i < connections.Length; i++)
             {
@@ -57,9 +57,8 @@ namespace RoboMed.Drawing
                 if (direction != null)
                 {
                     direction.LoadLongestLine(line);
+                    lines.Add(line);
                 }
-
-                lines[i] = line;
             }
 
             return lines;

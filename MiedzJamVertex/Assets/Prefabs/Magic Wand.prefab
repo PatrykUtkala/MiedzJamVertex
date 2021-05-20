@@ -93,7 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 203ae868ccae4a64aa9bf64f9709d97e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resolution: 1
+  resolution: 0.3
   wandEnd: {fileID: 823235893194720384}
 --- !u!114 &2066329362
 MonoBehaviour:
