@@ -14,7 +14,14 @@ namespace RoboMed.Puzzle
         [Tooltip("Miejsca, gdzie narysowana linia może się stykać z końcową częścią obwodu")]
         [SerializeField] Collider endArea;
 
+        private bool isValid = false; // zcachowany wynik walidacji
+
         public bool Validate()
+        {
+            return isValid;
+        }
+
+        private bool IsNewDrawnValid()
         {
             List<Vector3> connectionPoints = CopperLine.Permanent.GetConnectionPointsWith(CopperLine.Drawable);
 
@@ -51,11 +58,13 @@ namespace RoboMed.Puzzle
 
         private void OnFinishLine(Stack<Vector3> line)
         {
-            if (Validate())
+            if (IsNewDrawnValid())
             {
                 // Umieszczenie poprawnej ścieżki na stałe
                 CopperLine.Permanent.Add(line);
                 CopperLine.Drawable.Clear();
+
+                isValid = true;
             }
             else
             {
