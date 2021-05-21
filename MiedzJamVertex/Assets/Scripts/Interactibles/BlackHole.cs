@@ -9,7 +9,7 @@ namespace RoboMed.Interactibles
 {
     public class BlackHole : MonoBehaviour, IObjectCan
     {
-        public bool CanInteract => throw new NotImplementedException();
+        public bool CanDispose(GameObject item) => true;
 
         public bool Dispose(GameObject gameObject)
         {

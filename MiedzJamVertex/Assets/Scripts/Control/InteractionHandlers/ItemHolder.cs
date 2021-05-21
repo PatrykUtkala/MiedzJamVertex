@@ -32,12 +32,12 @@ namespace RoboMed.Control.InteractionHandlers
             else if(HeldObject != interactible)
             {
                 // Sprawdzenie, czy można użyć trzymanego obiektu na innym
-                if(interactible.TryGetComponent(out IObjectCan objectCan))
+                if(interactible.TryGetComponent(out IObjectCan objectCan) && objectCan.CanDispose(HeldObject))
                 {
-                    if (objectCan.Dispose(HeldObject))
-                    {  // objectCan odebrał trzymany obiekt
-                        HeldObject = null;
-                    }
+                    // Można umieścić
+                    GameObject heldObject = HeldObject;
+                    ReleaseObject();
+                    objectCan.Dispose(heldObject);
                 }
                 else if(HeldObject.TryGetComponent(out IInteractionHandler handler) && handler.CanInteractWith(interactible))
                 {

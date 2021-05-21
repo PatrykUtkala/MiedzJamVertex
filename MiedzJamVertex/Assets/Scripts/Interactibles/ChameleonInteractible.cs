@@ -13,10 +13,9 @@ namespace RoboMed.Interactibles
     class ChameleonInteractible : MonoBehaviour, IInteractible
     {
         [SerializeField] Material availableMaterial;
+        [SerializeField] MeshRenderer meshRenderer;
 
         private Material defaultMaterial;
-
-        private MeshRenderer meshRenderer;
 
         public bool CanInteract { get; set; } = true;
 
@@ -37,7 +36,10 @@ namespace RoboMed.Interactibles
 
         private void Awake()
         {
-            meshRenderer = GetComponent<MeshRenderer>();
+            if(meshRenderer == null)
+            {
+                meshRenderer = GetComponent<MeshRenderer>();
+            }
             defaultMaterial = meshRenderer.material;
         }
     }

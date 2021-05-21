@@ -22,9 +22,20 @@ namespace RoboMed.ItemCollecting
             if(item != null)
             {
                 SetItemTransform(item);
+
+                if(item.TryGetComponent(out ICollectible collectible))
+                {
+                    collectible.OnCollected();
+                }
             }
 
             CurrentItem = item;
+
+
+            if(TryGetComponent(out IInteractible standInteractible))
+            {
+                standInteractible.CanInteract = CurrentItem == null;  // dostępny, tylko jeśli wolne miejsce
+            }
         }
 
         private void SetItemTransform(GameObject item)
@@ -41,13 +52,13 @@ namespace RoboMed.ItemCollecting
             }
         }
 
-        private void Awake()
+        protected void Awake()
         {
             // Przedmioty będą ustawiane w tej samej pozycji, co ten obiekt
             designatedPosition = transform.position;
         }
 
-        private void Update()
+        protected void Update()
         {
             if (CurrentItem == null)
                 return;
@@ -55,7 +66,7 @@ namespace RoboMed.ItemCollecting
             if (CurrentItem.transform.position != designatedPosition)
             {
                 // Przedmiot odszedł
-                CurrentItem = null;
+                SetItem(null);
             }
         }
     }
