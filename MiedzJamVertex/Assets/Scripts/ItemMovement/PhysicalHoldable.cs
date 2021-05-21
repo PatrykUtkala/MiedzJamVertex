@@ -21,6 +21,8 @@ namespace RoboMed.ItemMovement
 
         public bool CanCollect => GetComponent<Rigidbody>().useGravity;
 
+        public ItemStand StartingPosition { get; set; }
+
         public event Action onHeld;
         public event Action onReleased;
 

@@ -186,7 +186,7 @@ GameObject:
   - component: {fileID: 2818666436853657638}
   - component: {fileID: 5384326798684650401}
   m_Layer: 0
-  m_Name: Items Exhibition
+  m_Name: Trash Collection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -261,6 +261,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detection: 1
   itemCollection: {fileID: 2368776418549017639}
+  trashCollection: {fileID: 2368776418549017639}
 --- !u!114 &5384326798684650401
 MonoBehaviour:
   m_ObjectHideFlags: 0

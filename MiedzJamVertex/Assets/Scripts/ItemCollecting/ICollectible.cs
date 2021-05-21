@@ -1,22 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RoboMed.ItemCollecting
+﻿namespace RoboMed.ItemCollecting
 {
     /// <summary>
-    /// Przedmiot, którego pozycja jest resetowana
+    /// Przedmiot, którego pozycja może być kontrolowana przez zbierające komponenty (np. CollectingArea)
     /// </summary>
     interface ICollectible
     {
+        ItemStand StartingPosition { get; set; }
+
         bool CanCollect { get; }
 
-        /// <summary>
-        /// Przywraca do domyślnego położenia i rotacji
-        /// </summary>
-        void ResetTransform();
+        void ResetTransform(); // może usunąć
 
         void OnCollected();
     }

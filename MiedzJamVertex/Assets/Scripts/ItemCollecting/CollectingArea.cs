@@ -14,15 +14,17 @@ namespace RoboMed.ItemCollecting
     {
         enum CollisionType { Collision, Trigger};
 
-        [SerializeField] CollisionType detection;
+        [SerializeField] CollisionType detection = CollisionType.Trigger;
         [Tooltip("Zbierająca kolekcja z komponentem IItemCollection. Jeśli brak, odstawia na domyślne miejsce.")]
         [SerializeField] GameObject itemCollection;
+        [Tooltip("Kosz, do którego wrzucane są przedmioty, jeśli nie ma miejsca w docelowej kolekcji i początkowym miejscu")]
+        [SerializeField] GameObject trashCollection;
 
-        protected void TryCollect(GameObject go)
+        protected bool TryCollect(GameObject go)
         {
             ICollectible collectible = go.GetComponent<ICollectible>();
             if (collectible == null)
-                return;
+                return false;
 
             if (collectible.CanCollect)
             {
@@ -32,13 +34,31 @@ namespace RoboMed.ItemCollecting
                     collected = itemCollection.GetComponent<IItemCollection>().AddItem(go);
                 }
 
+                if (!collected && collectible.StartingPosition != null && collectible.StartingPosition.CurrentItem == null)
+                {
+                    // Umieszczenie w początkowym miejscu
+                    collectible.StartingPosition.SetItem(go);
+                    collected = true;
+                }
+
+                if (!collected)
+                {
+                    collected = trashCollection.GetComponent<IItemCollection>().AddItem(go);
+                }
+
                 if (!collected)
                 {
                     collectible.ResetTransform();
                 }
 
-                collectible.OnCollected();
+                if (collected)
+                {
+                    collectible.OnCollected(); // może usunąć stąd
+                    return true;
+                }
             }
+
+            return false;
         }
 
         private void OnTriggerEnter(Collider other)
