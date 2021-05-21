@@ -497,46 +497,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4970981258959612593, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
-      propertyPath: m_Type
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4970981258959612593, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 9a6cc47caa5a2bf428b3c86227792f25, type: 3}
-    - target: {fileID: 4970981259075160310, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
-      propertyPath: m_Type
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4970981259075160310, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 9a6cc47caa5a2bf428b3c86227792f25, type: 3}
-    - target: {fileID: 4970981259348359999, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
-      propertyPath: m_Type
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4970981259348359999, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 9a6cc47caa5a2bf428b3c86227792f25, type: 3}
-    - target: {fileID: 4970981259536737001, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
-      propertyPath: m_Type
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4970981259536737001, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 9a6cc47caa5a2bf428b3c86227792f25, type: 3}
-    - target: {fileID: 4970981259860354432, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
-      propertyPath: m_Type
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4970981259860354432, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 9a6cc47caa5a2bf428b3c86227792f25, type: 3}
     - target: {fileID: 4970981260157122503, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
       propertyPath: m_Name
       value: GamuGui
