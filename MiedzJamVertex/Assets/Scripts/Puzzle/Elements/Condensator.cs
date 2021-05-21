@@ -12,7 +12,7 @@ namespace RoboMed.Puzzle.Elements
         [SerializeField] float capacity;
         [SerializeField] float voltage;
 
-        private Quaternion startingRotation; // początkowa rotacja początkowego przedmiotu
+        private Quaternion startingRotation;
 
         public bool IsValidSubstitute(GameObject substitute)
         {

@@ -10,6 +10,7 @@ namespace RoboMed.Drawing
     public class CopperLine : MonoBehaviour
     {
         public static CopperLine Drawable { get; private set; }
+        public static CopperLine Permanent { get; private set; }
 
         [SerializeField] bool isDrawable;
         [SerializeField] bool instantiateFromChildren = false;
@@ -20,9 +21,9 @@ namespace RoboMed.Drawing
         [Tooltip("Odległość, poniżej której inne punkty są traktowane jak połączone z tą linią")]
         public float minDistance = 0.3f;
 
-        protected MeshFilter meshFilter;
+        public List<Vector3[]> Lines { get; private set; } = new List<Vector3[]>();
 
-        protected List<Vector3[]> lines = new List<Vector3[]>();
+        protected MeshFilter meshFilter;
 
         public bool IsDrawableConnected(out Vector3 connectionPoint)
         {
@@ -33,7 +34,7 @@ namespace RoboMed.Drawing
                 return false;
             }
 
-            foreach(Vector3[] line in Drawable.lines)
+            foreach(Vector3[] line in Drawable.Lines)
             {
                 foreach(Vector3 point in line)
                 {
@@ -52,7 +53,7 @@ namespace RoboMed.Drawing
         {
             List<Vector3> connectionPoints = new List<Vector3>();
 
-            foreach (Vector3[] line in other.lines)
+            foreach (Vector3[] line in other.Lines)
             {
                 foreach (Vector3 point in line)
                 {
@@ -71,7 +72,7 @@ namespace RoboMed.Drawing
         /// </summary>
         public bool IsConnected(Vector3 point)
         {
-            foreach(Vector3[] line in lines)
+            foreach(Vector3[] line in Lines)
             {
                 // Sprawdzanie, czy któryś odcinek jest połączony z point
                 for (int i = 0; i < line.Length - 1; i++)
@@ -127,8 +128,8 @@ namespace RoboMed.Drawing
         /// </summary>
         public void AddOverwrite(Stack<Vector3> line)
         {
-            lines = new List<Vector3[]>();
-            lines.Add(line.ToArray());
+            Lines = new List<Vector3[]>();
+            Lines.Add(line.ToArray());
 
             meshFilter.mesh = LineToMesh(line);
         }
@@ -148,11 +149,20 @@ namespace RoboMed.Drawing
             combinedMesh.CombineMeshes(combine, true, false);
             meshFilter.mesh = combinedMesh;
 
-            lines.Add(line.ToArray());
+            Lines.Add(line.ToArray());
+        }
+
+        public void Clear()
+        {
+            Lines = new List<Vector3[]>();
+
+            meshFilter.mesh = new Mesh();
         }
 
         protected Mesh LineToMesh(Stack<Vector3> line)
         {
+            if (line.Count == 0)
+                return new Mesh();
             if (line.Count == 1)
                 return GetPointMesh(line.Peek());
 
@@ -290,6 +300,10 @@ namespace RoboMed.Drawing
             if(Drawable == null && isDrawable)
             {
                 Drawable = this;
+            }
+            else if(Permanent == null && !isDrawable)
+            {
+                Permanent = this;
             }
 
             meshFilter = GetComponent<MeshFilter>();

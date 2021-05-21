@@ -74,7 +74,14 @@ namespace RoboMed.Drawing
             if (transform.parent.GetChild(selfIndex - 1).TryGetComponent(out GraphVertex prevVertex))
             {
                 // Łączenie
-                connections.Add(prevVertex);
+                if(connections.Count > 0 && connections[0] == null)
+                {
+                    connections[0] = prevVertex;
+                }
+                else
+                {
+                    connections.Add(prevVertex);
+                }
             }
         }
 
