@@ -27,6 +27,5 @@ public class ForGameController : MonoBehaviour
                 PauseMenu.SetActive(true);
             }
         }
-        
     }
 }
