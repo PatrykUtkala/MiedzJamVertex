@@ -5,6 +5,7 @@ namespace RoboMed.Interactibles
     [RequireComponent(typeof(IHoldable))]
     public class Rotatable : MonoBehaviour
     {
+        public float YRotation { get; private set; }
         private bool isUnlocked = false;
 
         private void Update()
@@ -15,12 +16,16 @@ namespace RoboMed.Interactibles
                 if(Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
                 {
                     // Zgodnie z ruchem wskazówek zegara
-                    transform.Rotate(new Vector3(0, 90f, 0), Space.World);
+                    float angle = 90f;
+                    transform.Rotate(new Vector3(0, angle, 0), Space.Self);
+                    YRotation += angle;
                 }
                 if(Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
                 {
                     // Przeciwnie do ruchu wskazówek zegara
-                    transform.Rotate(new Vector3(0, -90f, 0), Space.World);
+                    float angle = -90f;
+                    transform.Rotate(new Vector3(0, angle, 0), Space.Self);
+                    YRotation += angle;
                 }
             }
         }
@@ -45,6 +50,11 @@ namespace RoboMed.Interactibles
         private void Block()
         {
             isUnlocked = false;
+        }
+
+        private void Awake()
+        {
+            YRotation = transform.rotation.eulerAngles.y;
         }
     }
 }

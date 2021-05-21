@@ -1,4 +1,6 @@
-﻿namespace RoboMed.ItemCollecting
+﻿using UnityEngine;
+
+namespace RoboMed.ItemCollecting
 {
     /// <summary>
     /// Przedmiot, którego pozycja może być kontrolowana przez zbierające komponenty (np. CollectingArea)

@@ -67,7 +67,7 @@ namespace RoboMed.Control.InteractionHandlers
             // Przeniesienie do ręki
             HeldObject.transform.parent = holdPoint;
             HeldObject.transform.position = holdPoint.position;
-            HeldObject.transform.rotation = go.GetComponent<IHoldable>().HoldingRotation; // TODO: smooth-out
+            HeldObject.transform.localRotation = go.GetComponent<IHoldable>().HoldingRotation; // TODO: smooth-out
             HeldObject.GetComponent<IHoldable>().Hand = GetComponent<MouseFollower>();
 
             HeldObject.GetComponent<IHoldable>().OnHeld();

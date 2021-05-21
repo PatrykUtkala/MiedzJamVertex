@@ -10,12 +10,14 @@ namespace RoboMed.ItemMovement
     /// Przedmiot trzymany, który podczas spadania zachowuje się w sposób fizyczny
     /// </summary>
     [RequireComponent(typeof(IInteractible))]
+    [RequireComponent(typeof(Rotatable))]
     public class PhysicalHoldable : MonoBehaviour, IHoldable, ICollectible
     {
         private Vector3 startingPosition;
         private Quaternion startingRotation;
 
-        public Quaternion HoldingRotation => startingRotation;
+        public Quaternion HoldingRotation 
+            => Quaternion.Euler(startingRotation.eulerAngles.x, GetComponent<Rotatable>().YRotation, startingRotation.eulerAngles.z);
 
         public MouseFollower Hand { get; set; }
 
