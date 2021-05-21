@@ -10,6 +10,7 @@ namespace RoboMed.ItemCollecting
     /// <summary>
     /// Obszar, po wejściu do którego przedmioty są zbierane lub cofane na domyślne pozycje
     /// </summary>
+    [RequireComponent(typeof(Collider))]
     public class CollectingArea : MonoBehaviour
     {
         enum CollisionType { Collision, Trigger};

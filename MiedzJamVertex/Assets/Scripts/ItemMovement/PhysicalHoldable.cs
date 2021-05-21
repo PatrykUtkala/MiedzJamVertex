@@ -12,6 +12,7 @@ namespace RoboMed.ItemMovement
     /// </summary>
     [RequireComponent(typeof(IInteractible))]
     [RequireComponent(typeof(Rotatable))]
+    [RequireComponent(typeof(Rigidbody))]
     public class PhysicalHoldable : MonoBehaviour, IHoldable, ICollectible
     {
         private Vector3 startingPosition;

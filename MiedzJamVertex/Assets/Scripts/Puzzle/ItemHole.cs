@@ -49,7 +49,7 @@ namespace RoboMed.Puzzle
             {
                 // Brak przedmiotu, a było tam coś
                 Debug.Log(this + ": Brak zamiennika dla " + StartingItem);
-                return false;  
+                return false;
             }
 
             if(StartingItem.GetComponent<IExchangePuzzle>() == null)

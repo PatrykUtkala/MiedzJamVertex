@@ -11,6 +11,7 @@ namespace RoboMed.Puzzle.Elements
     {
         [SerializeField] float capacity;
         [SerializeField] float voltage;
+        [SerializeField] bool isBroken = false;
 
         private Quaternion startingRotation;
 
@@ -34,7 +35,7 @@ namespace RoboMed.Puzzle.Elements
             if(!greaterEqualVoltage)
                 Debug.Log($"{this}: {substCondensator} ma mniejsze napięcie");
 
-            return sameRotation && greaterEqualCapacity && greaterEqualVoltage;
+            return sameRotation && greaterEqualCapacity && greaterEqualVoltage && !substCondensator.isBroken;
         }
 
         private void Start()

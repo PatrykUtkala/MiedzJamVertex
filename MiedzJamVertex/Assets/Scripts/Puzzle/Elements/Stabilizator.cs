@@ -8,6 +8,7 @@ namespace RoboMed.Puzzle.Elements
 
         [SerializeField] StabilizatorType stabilizatorType;
         [SerializeField] float voltage;
+        [SerializeField] bool isBroken = false;
 
         private Quaternion startingRotation;
 
@@ -31,7 +32,7 @@ namespace RoboMed.Puzzle.Elements
             if (!sameVoltage)
                 Debug.Log($"Różne napięcie: {this} i {substitute}");
 
-            return sameRotation && sameType && sameVoltage;
+            return sameRotation && sameType && sameVoltage && !substStabilizator.isBroken;
         }
 
         private void Start()

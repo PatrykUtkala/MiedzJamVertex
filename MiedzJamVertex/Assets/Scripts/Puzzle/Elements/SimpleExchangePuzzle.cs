@@ -5,6 +5,7 @@ namespace RoboMed.Puzzle.Elements
     public class SimpleExchangePuzzle : MonoBehaviour, IExchangePuzzle
     {
         [SerializeField] ElementType elementType;
+        [SerializeField] bool isBroken = false;
 
         public bool IsValidSubstitute(GameObject substitute)
         {
@@ -15,7 +16,7 @@ namespace RoboMed.Puzzle.Elements
             }
 
             // Zgodne typy elementów
-            return true;
+            return !substElement.isBroken;
         }
     }
 }

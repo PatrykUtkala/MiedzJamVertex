@@ -8,6 +8,7 @@ namespace RoboMed.Puzzle.Elements
     {
         [SerializeField] float resistance;
         [SerializeField] float tolerance;
+        [SerializeField] bool isBroken = false;
 
         public bool IsValidSubstitute(GameObject substitute)
         {
@@ -25,7 +26,7 @@ namespace RoboMed.Puzzle.Elements
             if (!sameTolerance)
                 Debug.Log($"Ró¿na tolerancja: {this} i {substResistor}");
 
-            return sameResistance && sameTolerance;
+            return sameResistance && sameTolerance && !substResistor.isBroken;
         }
     }
 }
