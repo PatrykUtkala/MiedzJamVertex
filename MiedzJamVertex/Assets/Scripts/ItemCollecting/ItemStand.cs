@@ -44,7 +44,7 @@ namespace RoboMed.ItemCollecting
             if (item.TryGetComponent(out IHoldable holdable))
             {
                 // Użycie zdefiniowanej rotacji do prezentacji przedmiotu
-                item.transform.rotation = holdable.HoldingRotation;
+                item.transform.rotation = holdable.PresentingRotation;
             }
             else
             {

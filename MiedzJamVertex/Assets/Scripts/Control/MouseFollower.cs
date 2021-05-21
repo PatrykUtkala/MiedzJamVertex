@@ -1,5 +1,6 @@
 using RoboMed.Control.InteractionHandlers;
 using RoboMed.Interactibles;
+using RoboMed.Movement;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,15 +16,10 @@ namespace RoboMed.Control
         [SerializeField] GameObject handBody;
         [SerializeField] float distanceFromCamera = 5f;
         [SerializeField] float distanceFromPointed = 2f;
-        [SerializeField] float movementSpeed = 5f;
-        [SerializeField] float rotationSpeed = 5f;
         [Tooltip("Pozycja, wzglêdem której obraca siê obiekt")]
         [SerializeField] Transform rotationReference;
 
         public float DistanceFromPointed { get; set; }
-
-        private Vector3 targetPosition;
-        private Quaternion targetRotation;
 
         private MouseController mouseController;
 
@@ -31,8 +27,6 @@ namespace RoboMed.Control
 
         private void Awake()
         {
-            targetPosition = controlledObject.position;
-            targetRotation = controlledObject.rotation;
             DistanceFromPointed = distanceFromPointed;
 
             startingRotation = controlledObject.rotation;
@@ -55,16 +49,10 @@ namespace RoboMed.Control
         // Update is called once per frame
         void Update()
         {
-            targetPosition = GetMousePoint();
+            SmoothMover mover = controlledObject.GetComponent<SmoothMover>();
 
-            // Obracanie adaptacyjne
-            targetRotation = GetTargetRotation();
-        }
-
-        private void LateUpdate()
-        {
-            controlledObject.position = Vector3.Lerp(controlledObject.position, targetPosition, Time.deltaTime * movementSpeed);
-            controlledObject.rotation = Quaternion.Lerp(controlledObject.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+            mover.TargetPosition = GetMousePoint();
+            mover.TargetRotation = GetTargetRotation();
         }
 
         private Vector3 GetMousePoint()

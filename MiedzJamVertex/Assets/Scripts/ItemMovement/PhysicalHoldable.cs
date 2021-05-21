@@ -3,6 +3,7 @@ using RoboMed.Interactibles;
 using System;
 using UnityEngine;
 using RoboMed.ItemCollecting;
+using RoboMed.Movement;
 
 namespace RoboMed.ItemMovement
 {
@@ -16,10 +17,11 @@ namespace RoboMed.ItemMovement
         private Vector3 startingPosition;
         private Quaternion startingRotation;
 
-        public Quaternion HoldingRotation 
+        public Quaternion PresentingRotation 
             => Quaternion.Euler(startingRotation.eulerAngles.x, GetComponent<Rotatable>().YRotation, startingRotation.eulerAngles.z);
 
         public MouseFollower Hand { get; set; }
+        public bool IsHeld { get; private set; }
 
         public bool CanCollect => GetComponent<Rigidbody>().useGravity;
 
@@ -28,8 +30,12 @@ namespace RoboMed.ItemMovement
         public event Action onHeld;
         public event Action onReleased;
 
+        private bool worldRotation = false; // stwierdza, czy powinno się utrzymać rotację względem globalnego układu
+
         public void OnHeld()
         {
+            IsHeld = true;
+
             GetComponent<IInteractible>().CanInteract = false;
 
             SetPhysical(false);
@@ -39,6 +45,8 @@ namespace RoboMed.ItemMovement
 
         public void OnReleased()
         {
+            IsHeld = false;
+
             GetComponent<IInteractible>().CanInteract = true;
 
             SetPhysical(true);
@@ -59,6 +67,21 @@ namespace RoboMed.ItemMovement
             SetPhysical(false);
         }
 
+        public void OnAvailableInteractibleChanged(GameObject newInteractible)
+        {
+            if(newInteractible == null)
+            {
+                // Pozycja względem ręki
+                transform.localRotation = PresentingRotation;
+                worldRotation = false;
+            }
+            else if(newInteractible.GetComponent<IObjectCan>() != null)
+            {
+                // Ustawienie w pozycji, w jakiej będzie wstawiony przedmiot
+                worldRotation = true;
+            }
+        }
+
         private void SetPhysical(bool physical)
         {
             Rigidbody rb = GetComponent<Rigidbody>();
@@ -75,6 +98,14 @@ namespace RoboMed.ItemMovement
         private void Start()
         {
             SetPhysical(false);
+        }
+
+        private void LateUpdate()
+        {
+            if (worldRotation)
+            {
+                transform.rotation = PresentingRotation;
+            }
         }
     }
 }

@@ -1,15 +1,21 @@
 using UnityEngine;
+using RoboMed.Interactibles;
 
-namespace RoboMed.Interactibles
+namespace RoboMed.Movement
 {
     [RequireComponent(typeof(IHoldable))]
     public class Rotatable : MonoBehaviour
     {
+        [SerializeField] bool canRotate = true;
         public float YRotation { get; private set; }
+
         private bool isUnlocked = false;
 
         private void Update()
         {
+            if (!canRotate)
+                return;
+
             // Obracanie tylko gdy trzymane w rêce
             if (isUnlocked)
             {

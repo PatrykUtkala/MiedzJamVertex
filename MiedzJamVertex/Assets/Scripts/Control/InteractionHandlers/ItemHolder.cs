@@ -17,7 +17,6 @@ namespace RoboMed.Control.InteractionHandlers
 
         // Informacje o trzymanym obiekcie
         private Transform startingParent;
-        private Vector3 startingPosition;
 
         public void InteractWith(GameObject interactible)
         {
@@ -62,12 +61,11 @@ namespace RoboMed.Control.InteractionHandlers
             HeldObject = go;
             // Zapisanie poprzedniego stanu
             startingParent = go.transform.parent;
-            startingPosition = go.transform.position;
 
             // Przeniesienie do ręki
             HeldObject.transform.parent = holdPoint;
             HeldObject.transform.position = holdPoint.position;
-            HeldObject.transform.localRotation = go.GetComponent<IHoldable>().HoldingRotation; // TODO: smooth-out
+            HeldObject.transform.localRotation = go.GetComponent<IHoldable>().PresentingRotation; // TODO: smooth-out
             HeldObject.GetComponent<IHoldable>().Hand = GetComponent<MouseFollower>();
 
             HeldObject.GetComponent<IHoldable>().OnHeld();
@@ -82,6 +80,7 @@ namespace RoboMed.Control.InteractionHandlers
 
             HeldObject.transform.parent = startingParent;
 
+            HeldObject.GetComponent<IHoldable>().OnAvailableInteractibleChanged(null);
             HeldObject.GetComponent<IHoldable>().OnReleased();
             HeldObject = null;
 
@@ -111,10 +110,15 @@ namespace RoboMed.Control.InteractionHandlers
 
         public void OnAvailableInteractibleChanged(GameObject newInteractible)
         {
-            if (HeldObject != null && HeldObject.TryGetComponent(out IInteractionHandler handler))
+            if (HeldObject == null)
+                return;
+
+            if (HeldObject.TryGetComponent(out IInteractionHandler handler))
             {
                 handler.OnAvailableInteractibleChanged(newInteractible);
             }
+
+            HeldObject.GetComponent<IHoldable>().OnAvailableInteractibleChanged(newInteractible);
         }
 
     }

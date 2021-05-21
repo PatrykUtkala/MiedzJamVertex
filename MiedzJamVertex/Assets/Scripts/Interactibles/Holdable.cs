@@ -13,7 +13,7 @@ namespace RoboMed.Interactibles
 
         public MouseFollower Hand { get; set; }
 
-        public Quaternion HoldingRotation { get; private set; }
+        public Quaternion PresentingRotation { get; private set; }
 
 
         public void OnHeld()
@@ -38,10 +38,17 @@ namespace RoboMed.Interactibles
             onReleased?.Invoke();
         }
 
+        public void OnAvailableInteractibleChanged(GameObject newInteractible)
+        {
+
+        }
+
+
+
         private void Awake()
         {
             // Rotacja trzymania jest początkową
-            HoldingRotation = transform.rotation;
+            PresentingRotation = transform.rotation;
         }
     }
 }
