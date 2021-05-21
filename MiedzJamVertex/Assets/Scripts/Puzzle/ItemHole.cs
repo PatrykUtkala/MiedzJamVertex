@@ -12,8 +12,6 @@ namespace RoboMed.Puzzle
     {
         public GameObject StartingItem { get; private set; }
 
-        private Quaternion startingRotation; // początkowa rotacja początkowego przedmiotu
-
         public bool CanDispose(GameObject item)
         {
             // Wolne miejsce i możliwość zebrania
@@ -50,19 +48,16 @@ namespace RoboMed.Puzzle
             if (CurrentItem == null)
             {
                 // Brak przedmiotu, a było tam coś
-                Debug.Log(this + ": Brak zamiennika");
+                Debug.Log(this + ": Brak zamiennika dla " + StartingItem);
                 return false;  
             }
 
-            bool sameRotation = CurrentItem.transform.rotation == startingRotation;
-            if (!sameRotation)
-                Debug.Log($"{this}: {CurrentItem} nie jest obrócony o " + startingRotation.eulerAngles);
-
-            bool validSubstitute = StartingItem.GetComponent<IExchangePuzzle>().IsValidSubstitute(CurrentItem);
-            if (!validSubstitute)
-                Debug.Log($"{this}: {CurrentItem} nie jest dobrym zamiennikiem dla {StartingItem}");
-
-            return sameRotation && validSubstitute;
+            if(StartingItem.GetComponent<IExchangePuzzle>() == null)
+            {
+                Debug.LogError(StartingItem + " nie posiada komponentu IExchangePuzzle");
+                return true;
+            }
+            return StartingItem.GetComponent<IExchangePuzzle>().IsValidSubstitute(CurrentItem);
         }
 
         protected new void Awake()
@@ -79,11 +74,6 @@ namespace RoboMed.Puzzle
                     SetItem(StartingItem);
                     break;
                 }
-            }
-
-            if(StartingItem != null)
-            {
-                startingRotation = StartingItem.transform.rotation;
             }
         }
     }
