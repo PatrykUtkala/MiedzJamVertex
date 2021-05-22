@@ -19,7 +19,8 @@ public class boardController : MonoBehaviour
         tr = gameObject.GetComponent<Transform>();
         oldx = tr.transform.position.x - 20;
         newx = oldx + amount + 20;
-        currentx = oldx;
+        if (state) currentx = newx;
+        else currentx = oldx;
     }
 
     private void Update()
