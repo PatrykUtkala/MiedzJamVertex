@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 1b098540bb1c54d4992357750e78087e
   - enabled: 1
-    path: Assets/Scenes/Scene Hokaros.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    path: Assets/Scenes/Models Test.unity
+    guid: 5875e2ff4b674d44e85266cbaa36ece1
   m_configObjects: {}

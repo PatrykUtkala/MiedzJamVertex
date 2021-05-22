@@ -8,6 +8,7 @@ public class ForGameController : MonoBehaviour
 
     public GameObject PauseMenu;
     public GameObject PauseSettings;
+    public GameObject FinishImage;
     public GameObject GamePart;
     public GameObject InGameButtons;
     public GameObject[] Slides;
@@ -22,24 +23,25 @@ public class ForGameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Time.timeScale = 1;
         setButtons();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !FinishImage.activeSelf)
         {
             if (PauseMenu.activeSelf || PauseSettings.activeSelf)
             {
-                Time.timeScale = 0;
+                Time.timeScale = 1;
                 PauseMenu.SetActive(false);
                 PauseSettings.SetActive(false);
                 GamePart.SetActive(true);
             }
             else
             {
-                Time.timeScale = 1;
+                Time.timeScale = 0;
                 PauseMenu.SetActive(true);
                 GamePart.SetActive(false);
             }
@@ -94,6 +96,16 @@ public class ForGameController : MonoBehaviour
     {
        
         for (int i = 0; i < playableLevels; i++)
+        {
+            if (!Levelsbeaten[i]) return false;
+
+        }
+        return true;
+    }
+
+    bool checkForFinish()
+    {
+        for (int i = 0; i < Levelsbeaten.Length; i++)
         {
             if (!Levelsbeaten[i]) return false;
 
@@ -165,6 +177,10 @@ public class ForGameController : MonoBehaviour
         {
             FinishLevelButton(currentLevel);
             Levelsbeaten[currentLevel] = true;
+            if (checkForFinish())
+            {
+                finishGame();
+            }
             EnableNextSet();
             exitLevel();
         }
@@ -180,6 +196,12 @@ public class ForGameController : MonoBehaviour
         disableSliders();
     }
 
+    public void finishGame()
+    {
+        FinishImage.SetActive(true);
+        GamePart.SetActive(false);
+        PauseMenu.SetActive(false);
+    }
 
 }
 
