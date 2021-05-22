@@ -15,6 +15,8 @@ namespace RoboMed.Puzzle
 
         public GameObject StartingItem { get; private set; }
 
+        private Quaternion startingRotation;
+
         public bool CanDispose(GameObject item)
         {
             if (CurrentItem != null)
@@ -25,6 +27,10 @@ namespace RoboMed.Puzzle
 
             if (!item.TryGetComponent(out IElement elementType) || elementType.Type != allowedElements)
                 return false;  // niezgodny element
+
+            if (Mathf.Abs(Quaternion.Angle(item.transform.rotation, startingRotation)) >= 45f
+                && Mathf.Abs(Quaternion.Angle(item.transform.rotation, startingRotation * Quaternion.Euler(0, 180f, 0))) >= 45f)
+                return false; // niepoprawne ustawienie
 
             return true;
         }
@@ -80,6 +86,7 @@ namespace RoboMed.Puzzle
                 {
                     StartingItem = child.gameObject;
                     startingCollectible.StartingPosition = this;
+                    startingRotation = StartingItem.transform.rotation;
 
                     SetItem(StartingItem);
                     break;
