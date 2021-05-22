@@ -2,7 +2,7 @@
 
 namespace RoboMed.ItemCollecting
 {
-    interface IItemCollection
+    public interface IItemCollection
     {
         int FreeSpace { get; }
 

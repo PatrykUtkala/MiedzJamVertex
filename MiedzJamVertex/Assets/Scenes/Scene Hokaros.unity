@@ -1316,7 +1316,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6651780791799418415, guid: 34e591af2dc74654ab5a208600f431bc, type: 3}
       propertyPath: m_Name
-      value: Permanent Circuit Variant
+      value: Permanent Circuit
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 34e591af2dc74654ab5a208600f431bc, type: 3}
@@ -1524,7 +1524,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   connections:
   - {fileID: 5347762061602168510}
-  isStart: 1
 --- !u!1 &5347762059878090507
 GameObject:
   m_ObjectHideFlags: 0
@@ -1573,7 +1572,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   connections:
   - {fileID: 5347762060392487746}
-  isStart: 0
 --- !u!4 &5347762059983105502
 Transform:
   m_ObjectHideFlags: 0
@@ -1616,7 +1614,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   connections:
   - {fileID: 5347762060392487746}
-  isStart: 1
 --- !u!1 &5347762060090960863
 GameObject:
   m_ObjectHideFlags: 0
@@ -1648,7 +1645,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   connections:
   - {fileID: 5347762060822841624}
-  isStart: 0
 --- !u!4 &5347762060392487747
 Transform:
   m_ObjectHideFlags: 0
@@ -1693,7 +1689,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connections: []
-  isStart: 0
 --- !u!4 &5347762060822841625
 Transform:
   m_ObjectHideFlags: 0
@@ -1770,7 +1765,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   connections:
   - {fileID: 5347762059983105497}
-  isStart: 1
 --- !u!1 &5347762061602168505
 GameObject:
   m_ObjectHideFlags: 0
@@ -1802,7 +1796,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   connections:
   - {fileID: 0}
-  isStart: 0
 --- !u!4 &5347762061602168511
 Transform:
   m_ObjectHideFlags: 0

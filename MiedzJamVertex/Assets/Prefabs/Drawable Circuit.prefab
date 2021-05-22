@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1619270710244362922}
   - component: {fileID: 1619270710244362919}
   m_Layer: 0
-  m_Name: Copper Line
+  m_Name: Drawable Circuit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

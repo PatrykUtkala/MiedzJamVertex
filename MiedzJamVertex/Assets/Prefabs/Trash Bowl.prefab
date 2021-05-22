@@ -247,6 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0163a017b5c005a46ae1cd19d9cdaffc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isTrash: 1
 --- !u!114 &2818666436853657638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -261,7 +262,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detection: 1
   itemCollection: {fileID: 2368776418549017639}
-  trashCollection: {fileID: 2368776418549017639}
 --- !u!114 &5384326798684650401
 MonoBehaviour:
   m_ObjectHideFlags: 0

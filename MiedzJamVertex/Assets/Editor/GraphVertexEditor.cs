@@ -13,6 +13,7 @@ public class GraphVertexEditor : Editor
         if(GUILayout.Button("Po³¹cz z poprzednikiem"))
         {
             vertex.LinkToPrevious();
+            serializedObject.ApplyModifiedProperties();
         }
     }
 }

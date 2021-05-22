@@ -9,6 +9,8 @@ namespace RoboMed.Puzzle
     /// </summary>
     public class GeneralValidator : MonoBehaviour, IPuzzleValidator
     {
+        public static GeneralValidator Current { get; private set; }
+
         [Tooltip("Obiekty z komponentem IPuzzleValidator")]
         [SerializeField] List<GameObject> puzzleValidators;
 
@@ -33,6 +35,22 @@ namespace RoboMed.Puzzle
             {
                 if (child.GetComponent<IPuzzleValidator>() != null)
                     puzzleValidators.Add(child.gameObject);
+            }
+        }
+
+        private void OnEnable()
+        {
+            if(Current == null)
+            {
+                Current = this;
+            }
+        }
+
+        private void OnDisable()
+        {
+            if(Current == this)
+            {
+                Current = null;
             }
         }
     }

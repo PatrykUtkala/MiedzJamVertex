@@ -320,20 +320,36 @@ namespace RoboMed.Drawing
 
         private void Awake()
         {
-            if(Drawable == null && isDrawable)
-            {
-                Drawable = this;
-            }
-            else if(Permanent == null && !isDrawable)
-            {
-                Permanent = this;
-            }
-
             meshFilter = GetComponent<MeshFilter>();
 
             if (instantiateFromChildren)
             {
                 InstantianteFromChildren();
+            }
+        }
+
+        private void OnEnable()
+        {
+            if (Drawable == null && isDrawable)
+            {
+                Drawable = this;
+            }
+            else if (Permanent == null && !isDrawable)
+            {
+                Permanent = this;
+            }
+        }
+
+        private void OnDisable()
+        {
+            if (Drawable == this)
+            {
+                Drawable = null;
+            }
+
+            if (Permanent == this)
+            {
+                Permanent = null;
             }
         }
     }

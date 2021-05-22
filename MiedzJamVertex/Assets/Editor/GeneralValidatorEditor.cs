@@ -14,6 +14,7 @@ public class GeneralValidatorEditor : Editor
         if(GUILayout.Button("Add validators from children"))
         {
             validator.AddPuzzleChildren();
+            serializedObject.ApplyModifiedProperties();
         }
 
         if (GUILayout.Button("Validate"))

@@ -1,13 +1,17 @@
 ﻿using RoboMed.Control.InteractionHandlers;
 using RoboMed.Interactibles;
+using RoboMed.Puzzle;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Timeline;
 
 namespace RoboMed.Drawing
 {
+    [RequireComponent(typeof(IHoldable))]
     public class PathMarker : MonoBehaviour, IInteractionHandler
     {
+        public static PathMarker Main { get; private set; }
         static float maxDistance = 50f; // maksymalna odległość od kamery
 
         [Tooltip("Odległość między kolejnymi punktami kontrolnymi")]
@@ -71,9 +75,24 @@ namespace RoboMed.Drawing
 
         private void Awake()
         {
+            if(Main == null)
+            {
+                Main = this;
+            }
+
             startingRotation = transform.rotation;
 
             length = Vector3.Distance(transform.position, wandEnd.position);
+
+            onFinishLine += LineValidator.OnFinishLine;
+        }
+
+        private void OnDestroy()
+        {
+            if(Main == this)
+            {
+                Main = null;
+            }
         }
 
         private void OnEnable()
@@ -144,7 +163,14 @@ namespace RoboMed.Drawing
             if (currPoints.Count == 0)
                 return;
 
-            CopperLine.Drawable.AddOverwrite(currPoints);
+            if(CopperLine.Drawable == null)
+            {
+                Debug.LogError("Brak Drawable Circuit na scenie");
+            }
+            else
+            {
+                CopperLine.Drawable.AddOverwrite(currPoints);
+            }
         }
 
         private void ResetAvailableInteractible()

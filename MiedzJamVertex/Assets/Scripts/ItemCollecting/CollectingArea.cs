@@ -18,8 +18,6 @@ namespace RoboMed.ItemCollecting
         [SerializeField] CollisionType detection = CollisionType.Trigger;
         [Tooltip("Zbierająca kolekcja z komponentem IItemCollection. Jeśli brak, odstawia na domyślne miejsce.")]
         [SerializeField] GameObject itemCollection;
-        [Tooltip("Kosz, do którego wrzucane są przedmioty, jeśli nie ma miejsca w docelowej kolekcji i początkowym miejscu")]
-        [SerializeField] GameObject trashCollection;
 
         protected bool TryCollect(GameObject go)
         {
@@ -44,7 +42,14 @@ namespace RoboMed.ItemCollecting
 
                 if (!collected)
                 {
-                    collected = trashCollection.GetComponent<IItemCollection>().AddItem(go);
+                    if(ItemExhibition.Trash != null)
+                    {
+                        collected = ItemExhibition.Trash.AddItem(go);
+                    }
+                    else
+                    {
+                        Debug.LogError("Brak kosza na śmieci");
+                    }
                 }
 
                 if (!collected)

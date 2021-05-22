@@ -10,6 +10,10 @@ namespace RoboMed.ItemCollecting
     /// </summary>
     public class ItemExhibition : MonoBehaviour, IItemCollection
     {
+        public static ItemExhibition Trash { get; private set; }
+
+        [SerializeField] bool isTrash = false;
+
         /// <summary>
         /// Miejsca do wystawy przedmiotów
         /// </summary>
@@ -49,7 +53,27 @@ namespace RoboMed.ItemCollecting
 
         private void Awake()
         {
+            if (isTrash)
+            {
+                if(Trash == null)
+                {
+                    Trash = this;
+                }
+                else
+                {
+                    Debug.LogWarning("Wykryto wiêcej ni¿ jeden kosz na œmieci");
+                }
+            }
+
             stands = GetComponentsInChildren<ItemStand>();
+        }
+
+        private void OnDestroy()
+        {
+            if(Trash == this)
+            {
+                Trash = null;
+            }
         }
     }
 }

@@ -7,7 +7,8 @@ namespace RoboMed.Puzzle
 {
     public class LineValidator : MonoBehaviour, IPuzzleValidator
     {
-        [SerializeField] PathMarker marker;
+        private static List<LineValidator> lineValidators = new List<LineValidator>();
+
         [Header("Miejsca do połączenia")]
         [Tooltip("Miejsca, gdzie narysowana linia może się stykać z początkową częścią obwodu")]
         [SerializeField] Collider startArea;
@@ -56,15 +57,24 @@ namespace RoboMed.Puzzle
             return linksStart && linksEnd;
         }
 
-        private void OnFinishLine(Stack<Vector3> line)
+        public static void OnFinishLine(Stack<Vector3> line)
         {
-            if (IsNewDrawnValid())
+            bool isValid = false;
+
+            foreach(LineValidator disconnectedLine in lineValidators)
+            {
+                if (disconnectedLine.IsNewDrawnValid())
+                {
+                    disconnectedLine.isValid = true;
+                    isValid = true;
+                }
+            }
+
+            if (isValid)
             {
                 // Umieszczenie poprawnej ścieżki na stałe
                 CopperLine.Permanent.Add(line);
                 CopperLine.Drawable.Clear();
-
-                isValid = true;
             }
             else
             {
@@ -75,12 +85,12 @@ namespace RoboMed.Puzzle
 
         private void OnEnable()
         {
-            marker.onFinishLine += OnFinishLine;
+            lineValidators.Add(this);
         }
 
         private void OnDisable()
         {
-            marker.onFinishLine -= OnFinishLine;
+            lineValidators.Remove(this);
         }
     }
 }
