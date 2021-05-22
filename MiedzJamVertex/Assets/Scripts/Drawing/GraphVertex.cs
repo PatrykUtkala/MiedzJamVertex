@@ -11,7 +11,7 @@ namespace RoboMed.Drawing
         [Tooltip("Skierowane połączenia z tego punktu")]
         [SerializeField] List<GraphVertex> connections = new List<GraphVertex>();
 
-        public bool isStart = false;
+        public List<GraphVertex> Connections => connections;
 
         /// <summary>
         /// Czy wierzchołek posiada więcej niż jedną krawędź wychodzącą
@@ -87,10 +87,8 @@ namespace RoboMed.Drawing
 
         private void OnDrawGizmos()
         {
-            Gizmos.color = isStart ? Color.red : Color.yellow;
-            Gizmos.DrawSphere(transform.position, 0.1f);
-
             Gizmos.color = Color.yellow;
+            Gizmos.DrawSphere(transform.position, 0.1f);
 
             if (connections == null)
                 return;

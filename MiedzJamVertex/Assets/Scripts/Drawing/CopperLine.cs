@@ -93,16 +93,39 @@ namespace RoboMed.Drawing
         {
             List<GraphVertex> keyVertices = new List<GraphVertex>();
 
+            // Szukanie elementów początkowych
+            Dictionary<GraphVertex, bool> allVertices = new Dictionary<GraphVertex, bool>(); // z informacją o osiągnięciu z innego
             foreach(Transform child in transform)
             {
-                if(child.TryGetComponent(out GraphVertex vertex)) {
-                    if (vertex.IsFork || vertex.isStart)
-                    {
-                        keyVertices.Add(vertex);
-                    }
+                if(child.TryGetComponent(out GraphVertex vertex))
+                {
+                    allVertices.Add(vertex, false); // początkowo nieodkryte
                 }
             }
 
+            foreach(GraphVertex vertex in allVertices.Keys.ToArray())
+            {
+                foreach(GraphVertex connectedV in vertex.Connections)
+                {
+                    if (connectedV == null)
+                        continue;
+
+                    allVertices[connectedV] = true; // odkryty wierzchołek
+                }
+            }
+
+            // Załadowanie kluczowych wierzchołków (startowych i rozwidleń)
+            foreach(GraphVertex vertex in allVertices.Keys)
+            {
+                bool isReached = allVertices[vertex];
+                if (!isReached || vertex.IsFork)
+                {
+                    keyVertices.Add(vertex);
+                }
+
+            }
+
+            // Dodawanie linii
             bool first = true;
             foreach(var vertex in keyVertices)
             {
@@ -207,8 +230,8 @@ namespace RoboMed.Drawing
                 }
                 perpendicular.Normalize();
 
-                vertices[2 * i] = localPoint + perpendicular * thickness + Vector3.up * yLift;
-                vertices[2 * i + 1] = localPoint - perpendicular * thickness + Vector3.up * yLift;
+                vertices[2 * i] = localPoint + perpendicular * thickness/2 + Vector3.up * yLift;
+                vertices[2 * i + 1] = localPoint - perpendicular * thickness/2 + Vector3.up * yLift;
 
                 i++;
             }
