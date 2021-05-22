@@ -6,7 +6,8 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     public void PlayGame(int SetIndex)
-    {    
+    {
+        Time.timeScale = 1;
         SceneManager.LoadScene(SetIndex);
     }
 
