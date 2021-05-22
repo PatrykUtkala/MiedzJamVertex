@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace RoboMed.Puzzle.Elements
 {
-    public enum ElementType
+    interface IElement
     {
-        Fuse, // bezpiecznik
-        Condensator,
-        Resistor,
-        Stabilizator
+        ElementType Type { get; }
     }
 }

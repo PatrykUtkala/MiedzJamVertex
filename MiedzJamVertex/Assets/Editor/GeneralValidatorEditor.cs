@@ -10,6 +10,12 @@ public class GeneralValidatorEditor : Editor
         DrawDefaultInspector();
 
         GeneralValidator validator = (GeneralValidator)target;
+
+        if(GUILayout.Button("Add validators from children"))
+        {
+            validator.AddPuzzleChildren();
+        }
+
         if (GUILayout.Button("Validate"))
         {
             if (validator.Validate())

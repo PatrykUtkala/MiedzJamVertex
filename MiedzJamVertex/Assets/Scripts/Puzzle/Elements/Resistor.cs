@@ -4,11 +4,13 @@ using UnityEngine;
 
 namespace RoboMed.Puzzle.Elements
 {
-    public class Resistor : MonoBehaviour, IExchangePuzzle
+    public class Resistor : MonoBehaviour, IExchangePuzzle, IElement
     {
         [SerializeField] float resistance;
         [SerializeField] float tolerance;
         [SerializeField] bool isBroken = false;
+
+        public ElementType Type => ElementType.Resistor;
 
         public bool IsValidSubstitute(GameObject substitute)
         {

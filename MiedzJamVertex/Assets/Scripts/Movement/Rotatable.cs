@@ -3,7 +3,6 @@ using RoboMed.Interactibles;
 
 namespace RoboMed.Movement
 {
-    [RequireComponent(typeof(IHoldable))]
     public class Rotatable : MonoBehaviour
     {
         [SerializeField] bool canRotate = true;
@@ -38,14 +37,20 @@ namespace RoboMed.Movement
 
         private void OnEnable()
         {
-            GetComponent<IHoldable>().onHeld += Unlock;
-            GetComponent<IHoldable>().onReleased += Block;
+            if(TryGetComponent(out IHoldable holdable))
+            {
+                holdable.onHeld += Unlock;
+                holdable.onReleased += Block;
+            }
         }
 
         private void OnDisable()
         {
-            GetComponent<IHoldable>().onHeld -= Unlock;
-            GetComponent<IHoldable>().onReleased -= Block;
+            if (TryGetComponent(out IHoldable holdable))
+            {
+                holdable.onHeld -= Unlock;
+                holdable.onReleased -= Block;
+            }
         }
 
         private void Unlock()

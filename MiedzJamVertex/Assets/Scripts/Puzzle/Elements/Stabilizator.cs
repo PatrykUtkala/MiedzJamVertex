@@ -2,7 +2,7 @@
 
 namespace RoboMed.Puzzle.Elements
 {
-    public class Stabilizator : MonoBehaviour, IExchangePuzzle
+    public class Stabilizator : MonoBehaviour, IExchangePuzzle, IElement
     {
         enum StabilizatorType { Voltage, Current }
 
@@ -11,6 +11,8 @@ namespace RoboMed.Puzzle.Elements
         [SerializeField] bool isBroken = false;
 
         private Quaternion startingRotation;
+
+        public ElementType Type => ElementType.Stabilizator;
 
         public bool IsValidSubstitute(GameObject substitute)
         {

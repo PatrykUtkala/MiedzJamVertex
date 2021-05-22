@@ -7,13 +7,15 @@ using UnityEngine;
 
 namespace RoboMed.Puzzle.Elements
 {
-    public class Condensator : MonoBehaviour, IExchangePuzzle
+    public class Condensator : MonoBehaviour, IExchangePuzzle, IElement
     {
         [SerializeField] float capacity;
         [SerializeField] float voltage;
         [SerializeField] bool isBroken = false;
 
         private Quaternion startingRotation;
+
+        public ElementType Type => ElementType.Condensator;
 
         public bool IsValidSubstitute(GameObject substitute)
         {

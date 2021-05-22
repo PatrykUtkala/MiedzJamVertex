@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 4427066931159874091}
   - component: {fileID: 4427066931159874092}
   m_Layer: 0
-  m_Name: Item Hole
+  m_Name: Condensator Hole
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -141,6 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 041034acad0b69240bee4300fe60a248, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowedElements: 1
 --- !u!114 &4427066931159874092
 MonoBehaviour:
   m_ObjectHideFlags: 0

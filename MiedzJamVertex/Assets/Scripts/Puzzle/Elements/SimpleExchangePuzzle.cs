@@ -2,10 +2,12 @@
 
 namespace RoboMed.Puzzle.Elements
 {
-    public class SimpleExchangePuzzle : MonoBehaviour, IExchangePuzzle
+    public class SimpleExchangePuzzle : MonoBehaviour, IExchangePuzzle, IElement
     {
         [SerializeField] ElementType elementType;
         [SerializeField] bool isBroken = false;
+
+        public ElementType Type => elementType;
 
         public bool IsValidSubstitute(GameObject substitute)
         {

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace RoboMed.Puzzle
@@ -24,6 +25,15 @@ namespace RoboMed.Puzzle
             }
 
             return solved;
+        }
+
+        public void AddPuzzleChildren()
+        {
+            foreach(Transform child in transform)
+            {
+                if (child.GetComponent<IPuzzleValidator>() != null)
+                    puzzleValidators.Add(child.gameObject);
+            }
         }
     }
 }

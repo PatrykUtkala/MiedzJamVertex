@@ -2,6 +2,7 @@
 using UnityEngine;
 using RoboMed.ItemCollecting;
 using RoboMed.Interactibles;
+using RoboMed.Puzzle.Elements;
 
 namespace RoboMed.Puzzle
 {
@@ -10,13 +11,22 @@ namespace RoboMed.Puzzle
     /// </summary>
     public class ItemHole : ItemStand, IPuzzleValidator, IObjectCan
     {
+        [SerializeField] ElementType allowedElements;
+
         public GameObject StartingItem { get; private set; }
 
         public bool CanDispose(GameObject item)
         {
-            // Wolne miejsce i możliwość zebrania
-            return CurrentItem == null
-                && item.GetComponent<ICollectible>() != null;
+            if (CurrentItem != null)
+                return false; // brak miejsca
+
+            if (item.GetComponent<ICollectible>() == null)
+                return false; // brak możliwości zebrania
+
+            if (!item.TryGetComponent(out IElement elementType) || elementType.Type != allowedElements)
+                return false;  // niezgodny element
+
+            return true;
         }
 
         public bool Dispose(GameObject item)

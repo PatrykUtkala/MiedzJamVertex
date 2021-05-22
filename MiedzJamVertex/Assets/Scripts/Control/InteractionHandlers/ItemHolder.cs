@@ -78,7 +78,7 @@ namespace RoboMed.Control.InteractionHandlers
             if (HeldObject == null)
                 return;
 
-            HeldObject.transform.parent = startingParent;
+            HeldObject.transform.parent = null;
 
             HeldObject.GetComponent<IHoldable>().OnAvailableInteractibleChanged(null);
             HeldObject.GetComponent<IHoldable>().OnReleased();
@@ -105,7 +105,7 @@ namespace RoboMed.Control.InteractionHandlers
             if(HeldObject.TryGetComponent(out IInteractionHandler handler) && handler.CanInteractWith(interactible))
                 return true;  // interakcja pochodząca z trzymanego przedmiotu
 
-            return interactible.GetComponent<IObjectCan>() != null;
+            return interactible.TryGetComponent(out IObjectCan can) && can.CanDispose(HeldObject);
         }
 
         public void OnAvailableInteractibleChanged(GameObject newInteractible)
