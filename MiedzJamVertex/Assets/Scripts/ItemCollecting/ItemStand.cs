@@ -41,6 +41,7 @@ namespace RoboMed.ItemCollecting
         private void SetItemTransform(GameObject item)
         {
             item.transform.position = designatedPosition;
+            item.transform.parent = transform;
             if (item.TryGetComponent(out IHoldable holdable))
             {
                 // Użycie zdefiniowanej rotacji do prezentacji przedmiotu
