@@ -32,6 +32,17 @@ namespace RoboMed.ItemCollecting
             return true;
         }
 
+        public void Clear()
+        {
+            if (stands == null)
+                return;
+
+            foreach(ItemStand stand in stands)
+            {
+                stand.DestroyItem();
+            }
+        }
+
         /// <summary>
         /// Zwraca indeks pierwszego wolnego stanowiska
         /// </summary>

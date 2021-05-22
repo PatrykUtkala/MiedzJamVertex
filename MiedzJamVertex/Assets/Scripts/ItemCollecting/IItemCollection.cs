@@ -12,5 +12,7 @@ namespace RoboMed.ItemCollecting
         /// <param name="item">Przedmiot do umieszczenia</param>
         /// <returns>Czy udało się umieścić</returns>
         bool AddItem(GameObject item);
+
+        void Clear();
     }
 }

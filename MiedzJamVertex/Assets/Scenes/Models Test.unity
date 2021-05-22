@@ -1624,7 +1624,7 @@ PrefabInstance:
     - target: {fileID: 4970981260157122554, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
       propertyPath: PCBs.Array.data[1]
       value: 
-      objectReference: {fileID: 5678870518690852181, guid: 9dd1b356b69bcaa4294dbc7b35241e04, type: 3}
+      objectReference: {fileID: 6232697704877644945, guid: 06a9d782a84c9e44aa904bdde828c6f3, type: 3}
     - target: {fileID: 4970981260157122554, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
       propertyPath: PCBs.Array.data[2]
       value: 
@@ -2815,7 +2815,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1001 &5678870518890184570
 PrefabInstance:
   m_ObjectHideFlags: 0

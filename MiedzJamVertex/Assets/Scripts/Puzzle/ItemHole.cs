@@ -79,10 +79,13 @@ namespace RoboMed.Puzzle
         protected new void Awake()
         {
             base.Awake();
+        }
 
-            foreach(Transform child in transform)
+        protected void Start()
+        {
+            foreach (Transform child in transform)
             {
-                if(child.TryGetComponent(out ICollectible startingCollectible))
+                if (child.TryGetComponent(out ICollectible startingCollectible))
                 {
                     StartingItem = child.gameObject;
                     startingCollectible.StartingPosition = this;

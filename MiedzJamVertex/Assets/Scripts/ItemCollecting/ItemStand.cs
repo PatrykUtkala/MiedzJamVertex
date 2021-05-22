@@ -38,6 +38,15 @@ namespace RoboMed.ItemCollecting
             }
         }
 
+        public void DestroyItem()
+        {
+            if (CurrentItem == null)
+                return;
+
+            Destroy(CurrentItem);
+            CurrentItem = null;
+        }
+
         private void SetItemTransform(GameObject item)
         {
             item.transform.position = designatedPosition;
