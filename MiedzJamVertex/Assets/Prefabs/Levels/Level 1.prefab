@@ -3628,6 +3628,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -2.407
       objectReference: {fileID: 0}
+    - target: {fileID: 5678870520080842873, guid: 9dd1b356b69bcaa4294dbc7b35241e04, type: 3}
+      propertyPath: puzzleValidators.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5678870520374725624, guid: 9dd1b356b69bcaa4294dbc7b35241e04, type: 3}
       propertyPath: m_LocalPosition.z
       value: 3.16

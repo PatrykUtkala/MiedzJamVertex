@@ -11,6 +11,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0.6
       objectReference: {fileID: 0}
+    - target: {fileID: 7749279138129997279, guid: 05ffd79b18bc6d54d9da575dfde7a05b, type: 3}
+      propertyPath: puzzleValidators.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7749279139501146348, guid: 05ffd79b18bc6d54d9da575dfde7a05b, type: 3}
       propertyPath: m_RootOrder
       value: 0
