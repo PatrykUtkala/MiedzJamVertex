@@ -13,8 +13,10 @@ namespace RoboMed.ItemCollecting
     /// </summary>
     public class ItemStand : MonoBehaviour
     {
+        protected Quaternion startingRotation;
         private Vector3 designatedPosition;
 
+        public GameObject StartingItem { get; private set; }
         public GameObject CurrentItem { get; private set; } = null;
 
         public void SetItem(GameObject item)
@@ -60,12 +62,33 @@ namespace RoboMed.ItemCollecting
             {
                 item.transform.rotation = transform.rotation;
             }
+
+            // Obrót
+            if (Mathf.Abs(Quaternion.Angle(item.transform.rotation, startingRotation)) >= 45f
+                && Mathf.Abs(Quaternion.Angle(item.transform.rotation, startingRotation * Quaternion.Euler(0, 180f, 0))) >= 45f)
+                item.transform.Rotate(0, 90f, 0);
         }
 
         protected void Awake()
         {
             // Przedmioty będą ustawiane w tej samej pozycji, co ten obiekt
             designatedPosition = transform.position;
+        }
+
+        protected void Start()
+        {
+            foreach (Transform child in transform)
+            {
+                if (child.TryGetComponent(out ICollectible startingCollectible))
+                {
+                    StartingItem = child.gameObject;
+                    startingCollectible.StartingPosition = this;
+                    startingRotation = StartingItem.transform.rotation;
+
+                    SetItem(StartingItem);
+                    break;
+                }
+            }
         }
 
         protected void Update()

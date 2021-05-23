@@ -13,10 +13,6 @@ namespace RoboMed.Puzzle
     {
         [SerializeField] ElementType allowedElements;
 
-        public GameObject StartingItem { get; private set; }
-
-        private Quaternion startingRotation;
-
         public bool CanDispose(GameObject item)
         {
             if (CurrentItem != null)
@@ -74,27 +70,6 @@ namespace RoboMed.Puzzle
                 return true;
             }
             return StartingItem.GetComponent<IExchangePuzzle>().IsValidSubstitute(CurrentItem);
-        }
-
-        protected new void Awake()
-        {
-            base.Awake();
-        }
-
-        protected void Start()
-        {
-            foreach (Transform child in transform)
-            {
-                if (child.TryGetComponent(out ICollectible startingCollectible))
-                {
-                    StartingItem = child.gameObject;
-                    startingCollectible.StartingPosition = this;
-                    startingRotation = StartingItem.transform.rotation;
-
-                    SetItem(StartingItem);
-                    break;
-                }
-            }
         }
     }
 }
