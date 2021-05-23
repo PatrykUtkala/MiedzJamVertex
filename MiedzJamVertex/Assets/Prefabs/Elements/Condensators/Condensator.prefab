@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 5283447713835307701}
   - component: {fileID: 7803019064940312858}
   - component: {fileID: 5156238859302723504}
-  - component: {fileID: 5426330034662881788}
   - component: {fileID: 7180551193049794470}
   - component: {fileID: 2567799132971806196}
   - component: {fileID: 3296036835947170595}
+  - component: {fileID: 3396889066975093241}
   m_Layer: 0
   m_Name: Condensator
   m_TagString: Untagged
@@ -66,20 +66,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &5426330034662881788
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3517592553454607820}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8fc7f1a884a1c1e4aa3e57b76e7adcd5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  availableMaterial: {fileID: 2100000, guid: 1b00381f3669bd94bb57e134c73050e9, type: 2}
-  meshRenderer: {fileID: 0}
 --- !u!114 &7180551193049794470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,3 +106,15 @@ MonoBehaviour:
   capacity: 140
   voltage: 9
   isBroken: 0
+--- !u!114 &3396889066975093241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3517592553454607820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64da434664df34b41a0ad5344a11557e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
