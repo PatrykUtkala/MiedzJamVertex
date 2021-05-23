@@ -177,7 +177,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 207ccf7998cd0884089962f6b7764082, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  puzzleValidators: []
+  puzzleValidators:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 1879056134758347123}
 --- !u!1 &1879056134664921318
 GameObject:
   m_ObjectHideFlags: 0
