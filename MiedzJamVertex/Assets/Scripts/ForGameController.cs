@@ -175,16 +175,25 @@ public class ForGameController : MonoBehaviour
     {
         if (currentPCB)
         {
-            FinishLevelButton(currentLevel);
-            Levelsbeaten[currentLevel] = true;
-            if (checkForFinish())
+            if (RoboMed.Puzzle.GeneralValidator.Current.Validate())
             {
-                finishGame();
+                FinishLevelButton(currentLevel);
+                Levelsbeaten[currentLevel] = true;
+                disableSliders();
+                if (checkForFinish())
+                {
+                    finishGame();
+                }
+                EnableNextSet();
+                exitLevel();
+                
             }
-            EnableNextSet();
-            exitLevel();
+            else
+            {
+
+            }
         }
-        disableSliders();
+        
 
     }
 
