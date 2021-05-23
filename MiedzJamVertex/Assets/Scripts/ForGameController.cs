@@ -11,6 +11,7 @@ public class ForGameController : MonoBehaviour
     public GameObject FinishImage;
     public GameObject GamePart;
     public GameObject InGameButtons;
+    public AudioSource[] Narrator;
     public GameObject[] Slides;
     public bool[] Levelsbeaten = {false};
     public int playableLevels = 1;
@@ -25,6 +26,7 @@ public class ForGameController : MonoBehaviour
     {
         Time.timeScale = 1;
         setButtons();
+        Narrator[0].Play();
     }
 
     // Update is called once per frame
@@ -46,6 +48,26 @@ public class ForGameController : MonoBehaviour
                 GamePart.SetActive(false);
             }
         }
+    }
+
+    void muteNarrator()
+    {
+        for(int i = 0; i < Narrator.Length; i++)
+        {
+            Narrator[i].Pause();
+        }
+    }
+
+    bool CheckNarrator()
+    {
+        for (int i = 0; i < Narrator.Length; i++)
+        {
+            if (Narrator[i].isPlaying)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     void LoadPCB(int pcb)
@@ -171,6 +193,9 @@ public class ForGameController : MonoBehaviour
         }
         InGameButtons.SetActive(true);
         enableSliders();
+        muteNarrator();
+        int sound = Random.Range(2, 4);
+        Narrator[sound].Play();
     }
 
     public void FinishLevel()
@@ -184,11 +209,18 @@ public class ForGameController : MonoBehaviour
                 Levelsbeaten[currentLevel] = true;
                 if (checkForFinish())
                 {
+                    muteNarrator();
+                    Narrator[1].Play();
                     finishGame();
                 }
                 EnableNextSet();
                 exitLevel();
                 disableSliders();
+            }
+            else if(CheckNarrator())
+            {
+                int sound = Random.Range(4, 8);
+                Narrator[sound].Play();
             }
         }
         
