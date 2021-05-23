@@ -52,6 +52,8 @@ public class ForGameController : MonoBehaviour
     {
         Destroy(currentPCB);
         currentPCB = Instantiate(PCBs[pcb], Boardposition.transform.position, Quaternion.identity);
+        //if(RoboMed.Puzzle.GeneralValidator.Current.)
+        RoboMed.Puzzle.GeneralValidator.Current.AddPuzzleChildren();
     }
     
     void DisableButton(int index)
@@ -175,16 +177,21 @@ public class ForGameController : MonoBehaviour
     {
         if (currentPCB)
         {
-            FinishLevelButton(currentLevel);
-            Levelsbeaten[currentLevel] = true;
-            if (checkForFinish())
+            
+            if (RoboMed.Puzzle.GeneralValidator.Current.Validate())
             {
-                finishGame();
+                FinishLevelButton(currentLevel);
+                Levelsbeaten[currentLevel] = true;
+                if (checkForFinish())
+                {
+                    finishGame();
+                }
+                EnableNextSet();
+                exitLevel();
+                disableSliders();
             }
-            EnableNextSet();
-            exitLevel();
         }
-        disableSliders();
+        
 
     }
 
