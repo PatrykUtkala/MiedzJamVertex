@@ -335,7 +335,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "Dzi\u0119kujemy za gr\u0119 w Copper Veins. \n\nAutorzy: \nPatryk Utka\u0142a,
-    Jakub Stasiorowski, Ignacy Wasilewski, Agata"
+    \nJakub Stasiorowski, \nIgnacy Wasilewski,\nAgnieszka \u015Awistulska\n\nMusic
+    by Eric Matyas\r\nwww.soundimage.org"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f5c2490aec27f3c429fb3e22c3eeada5, type: 2}
   m_sharedMaterial: {fileID: -8533570574600634310, guid: f5c2490aec27f3c429fb3e22c3eeada5, type: 2}
@@ -362,8 +363,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
