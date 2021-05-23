@@ -25,7 +25,7 @@ namespace RoboMed.Puzzle.Elements
                 return false;
             }
 
-            bool sameRotation = Mathf.Abs(Quaternion.Angle(substitute.transform.rotation, startingRotation)) < Mathf.Epsilon;
+            bool sameRotation = Mathf.Abs(Quaternion.Angle(substitute.transform.rotation, startingRotation)) < 45f;
             if (!sameRotation)
                 Debug.Log($"{this}: {substitute} nie jest obrócony o " + startingRotation.eulerAngles);
 
