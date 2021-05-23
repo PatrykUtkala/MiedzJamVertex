@@ -4680,6 +4680,32 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1317151170, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
+      propertyPath: m_text
+      value: "Dzi\u0119kujemy za gr\u0119 w Copper Veins. \n\nAutorzy: Patryk Utka\u0142a,
+        Jakub Stasiorowski, Ignacy Wasilewski, Agata"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2127018205, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
+      propertyPath: m_text
+      value: "Twoim zadaniem jest przywr\xF3cenie robota do \u017Cycia poprzez wykonanie
+        ma\u0142ych napraw na p\u0142ytkach PCB.\n\nPo lewej stronie ekranu znajduj\u0105
+        si\u0119 slajdy, kt\xF3re zawieraj\u0105 informacje potrzebne do naprawy
+        uszkodze\u0144. Podno\u015B elementy lewym przyciskiem myszy i u\u017Cywaj
+        klawiszy \tkierunkowych by nimi obraca\u0107\r\n\nKliknij na czerwony kwadrat
+        by \tprzej\u015B\u0107 do pierwszej p\u0142ytki. \n"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2127018205, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
+      propertyPath: m_margin.x
+      value: 5.4157486
+      objectReference: {fileID: 0}
+    - target: {fileID: 2127018205, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
+      propertyPath: m_margin.y
+      value: -17.991806
+      objectReference: {fileID: 0}
+    - target: {fileID: 2127018205, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
+      propertyPath: m_margin.z
+      value: 102.323715
+      objectReference: {fileID: 0}
     - target: {fileID: 2465288536464602237, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
       propertyPath: m_IsActive
       value: 0
