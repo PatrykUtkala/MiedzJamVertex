@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1944,6 +1944,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item Plate
       objectReference: {fileID: 0}
+    - target: {fileID: 2483759341652757646, guid: 05170ce52d44c6c4bb6542634fd1b8ad, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3479750666056350413, guid: 05170ce52d44c6c4bb6542634fd1b8ad, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -2813,7 +2817,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.55744547, y: 0.0030257506, z: -0.0019926128, w: 0.8302057}
-  m_LocalPosition: {x: 0.17617033, y: 13.079773, z: -4.154005}
+  m_LocalPosition: {x: 0.17, y: 14.14, z: -4.59}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -4676,6 +4680,32 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1317151170, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
+      propertyPath: m_text
+      value: "Dzi\u0119kujemy za gr\u0119 w Copper Veins. \n\nAutorzy: Patryk Utka\u0142a,
+        Jakub Stasiorowski, Ignacy Wasilewski, Agata"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2127018205, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
+      propertyPath: m_text
+      value: "Twoim zadaniem jest przywr\xF3cenie robota do \u017Cycia poprzez wykonanie
+        ma\u0142ych napraw na p\u0142ytkach PCB.\n\nPo lewej stronie ekranu znajduj\u0105
+        si\u0119 slajdy, kt\xF3re zawieraj\u0105 informacje potrzebne do naprawy
+        uszkodze\u0144. Podno\u015B elementy lewym przyciskiem myszy i u\u017Cywaj
+        klawiszy \tkierunkowych by nimi obraca\u0107\r\n\nKliknij na czerwony kwadrat
+        by \tprzej\u015B\u0107 do pierwszej p\u0142ytki. \n"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2127018205, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
+      propertyPath: m_margin.x
+      value: 5.4157486
+      objectReference: {fileID: 0}
+    - target: {fileID: 2127018205, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
+      propertyPath: m_margin.y
+      value: -17.991806
+      objectReference: {fileID: 0}
+    - target: {fileID: 2127018205, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
+      propertyPath: m_margin.z
+      value: 102.323715
+      objectReference: {fileID: 0}
     - target: {fileID: 2465288536464602237, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -4839,6 +4869,30 @@ PrefabInstance:
     - target: {fileID: 3751600290078750892, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[5].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4970981258651458850, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
+      propertyPath: m_Colors.m_NormalColor.b
+      value: 0.015503734
+      objectReference: {fileID: 0}
+    - target: {fileID: 4970981258651458850, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
+      propertyPath: m_Colors.m_NormalColor.g
+      value: 0.015503734
+      objectReference: {fileID: 0}
+    - target: {fileID: 4970981258651458850, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
+      propertyPath: m_Colors.m_NormalColor.r
+      value: 0.122641504
+      objectReference: {fileID: 0}
+    - target: {fileID: 4970981258651458850, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.b
+      value: 0.019223912
+      objectReference: {fileID: 0}
+    - target: {fileID: 4970981258651458850, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.g
+      value: 0.019223912
+      objectReference: {fileID: 0}
+    - target: {fileID: 4970981258651458850, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.r
+      value: 0.14150941
       objectReference: {fileID: 0}
     - target: {fileID: 4970981258651458850, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -5088,6 +5142,18 @@ PrefabInstance:
       propertyPath: Slides.Array.size
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 4970981260157122554, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
+      propertyPath: PCBs.Array.data[0]
+      value: 
+      objectReference: {fileID: 6232697704877644945, guid: 06a9d782a84c9e44aa904bdde828c6f3, type: 3}
+    - target: {fileID: 4970981260157122554, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
+      propertyPath: PCBs.Array.data[1]
+      value: 
+      objectReference: {fileID: 1879056134664921318, guid: caff3e2b376bf7d4b96143a7d57ab7bd, type: 3}
+    - target: {fileID: 4970981260157122554, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
+      propertyPath: PCBs.Array.data[2]
+      value: 
+      objectReference: {fileID: 1989729833757323417, guid: a82981e487714c043a05298e389cdd91, type: 3}
     - target: {fileID: 4970981260157122554, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
       propertyPath: Slides.Array.data[0]
       value: 
@@ -8101,7 +8167,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3479750666056350413, guid: 95bc6fb545864fa46adc8a4d91dad25d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.93
+      value: -6.86
       objectReference: {fileID: 0}
     - target: {fileID: 3479750666056350413, guid: 95bc6fb545864fa46adc8a4d91dad25d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -8109,23 +8175,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3479750666056350413, guid: 95bc6fb545864fa46adc8a4d91dad25d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.98
+      value: 0.33
       objectReference: {fileID: 0}
     - target: {fileID: 3479750666056350413, guid: 95bc6fb545864fa46adc8a4d91dad25d, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.98845327
+      value: 0.9992928
       objectReference: {fileID: 0}
     - target: {fileID: 3479750666056350413, guid: 95bc6fb545864fa46adc8a4d91dad25d, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3479750666056350413, guid: 95bc6fb545864fa46adc8a4d91dad25d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.15152632
+      value: 0.03760297
       objectReference: {fileID: 0}
     - target: {fileID: 3479750666056350413, guid: 95bc6fb545864fa46adc8a4d91dad25d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3479750666056350413, guid: 95bc6fb545864fa46adc8a4d91dad25d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -8133,7 +8199,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3479750666056350413, guid: 95bc6fb545864fa46adc8a4d91dad25d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 17.431
+      value: 4.31
       objectReference: {fileID: 0}
     - target: {fileID: 3479750666056350413, guid: 95bc6fb545864fa46adc8a4d91dad25d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
