@@ -1532,7 +1532,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 1
+  m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 0.03
@@ -4856,6 +4856,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 138727669, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 563973869, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 612501901, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 648618874, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1099263781, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
+      propertyPath: m_RootOrder
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1108114790, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
+      propertyPath: m_RootOrder
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 1171832653, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1317151170, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
       propertyPath: m_text
       value: "Dzi\u0119kujemy za gr\u0119 w Copper Veins. \n\nAutorzy: Patryk Utka\u0142a,
@@ -4885,9 +4913,49 @@ PrefabInstance:
       propertyPath: m_fontColor32.rgba
       value: 4278190080
       objectReference: {fileID: 0}
+    - target: {fileID: 1330276522, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1343801128, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
+      propertyPath: m_RootOrder
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 1429163812, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1438805181, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
+      propertyPath: m_RootOrder
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 1468089314, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1579449656, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1629982641, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1710539585, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
+      propertyPath: m_RootOrder
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 1767681763, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1860924696, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2113685092, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
+      propertyPath: m_RootOrder
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 2127018205, guid: cf532a50493c30147a732b2f8c56f4d3, type: 3}
       propertyPath: m_text
